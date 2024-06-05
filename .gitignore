@@ -1,14 +1,16 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-*.o
+# Backup Files
+*.old
+*.bak
 
+# Archive Files
+*.bz2
+*.gz
+*.rar
+*.tar
+*.zip
 
-
-
-
-
-/*.gz
-
-/Makefile.old
-/MANIFEST.bak
-
-/*.zip
+# System Files
+.DS_Store
+Thumbs.db

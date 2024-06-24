@@ -13,6 +13,12 @@ goto endofperl
 #!perl -w
 #line 15
 #########################################################################################
+#
+# BSD 2-Clause Licensed source code
+#
+# Copyright (c) 2024, fdd26
+#
+#########################################################################################
 # The code above is valid Perl5 where you simply put all the MS-DOS Console Batch junk
 # inside a Perl array called "@rem", which is simply discarded and ignored
 # and also a valid Batch command line with remarks / comments or @rem

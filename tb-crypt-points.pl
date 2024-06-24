@@ -55,24 +55,6 @@ use Data::Dumper;
 
 my $points_tsv=<<EOF;
 
-rc30
-rc30
-rc20
-rc25
-rc10
-ec10
-k30
-k15
-k20
-k10
-k25
-k25
-cursed20
-cursed25
-heroic17
-hero10
-heroic20
-citadel30
 
 EOF
 ;
@@ -139,7 +121,7 @@ my %pointHash = (
 	''     =>  0
 );
 
-sub main()
+sub parseItems()
 {
 	# Split by lines
 	my @list = split /[\r\n]+/, $points_tsv;
@@ -210,6 +192,11 @@ sub main()
 	print Dumper \%countHash;
 	print "\n[$points]\n";
 
+	return \%countHash;
+}
+
+sub countPoints()
+{
 	my $points2 = 0;
 	foreach my $k (sort keys %countHash)
 	{
@@ -225,6 +212,14 @@ sub main()
 	}
 
 	print "points2 : [$points2]\n";
+
+	return \%countHash;
+}
+
+sub main()
+{
+	parseItems();
+	countPoints();
 }
 
 #########################################################################################

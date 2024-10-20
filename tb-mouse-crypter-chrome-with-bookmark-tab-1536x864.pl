@@ -262,9 +262,16 @@ sub half_left_state_machine()
 
 	usleep($wait_screen);
 
-	usleep($wait_screen);
+	my $crypt_left_menu_pos_ref = validate_is_crypt_left_menu();
+	if (!defined($crypt_left_menu_pos_ref))
+	{
+		print "Could not find the crypt LEFT MENU, try again\n";
+		return 1;
+	}
 
-	SetCursorPos( $crypt_first_mouse_xy[0]            + $dx, $crypt_first_mouse_xy[1]         + $dy );
+	usleep($wait_screen); # 500 ms
+
+	SetCursorPos( $crypt_first_mouse_xy[0]          + $dx, $crypt_first_mouse_xy[1]         + $dy );
 	usleep($wait_move_xy);
 	sendMouseLeftClick(0,0);
 	usleep($wait_click);
@@ -280,7 +287,17 @@ sub half_left_state_machine()
 
 	usleep($wait_screen);
 
-	SetCursorPos( $crypt_explore_right_mouse_xy[0]    + $dx, $crypt_explore_right_mouse_xy[1] + $dy );
+	my $crypt_gray_title_pos_ref = validate_is_crypt_gray_title();
+
+	if (!defined($crypt_gray_title_pos_ref))
+	{
+		print "Could not find the crypt, try again\n";
+		return 2;
+	}
+
+	#usleep($wait_screen); # 500 ms
+
+	SetCursorPos( $crypt_explore_right_mouse_xy[0]  + $dx, $crypt_explore_right_mouse_xy[1] + $dy );
 	usleep($wait_move_xy);
 	sendMouseLeftClick(0,0);
 	usleep($wait_click);
@@ -291,6 +308,8 @@ sub half_left_state_machine()
 	usleep($wait_move_xy);
 	sendMouseLeftClick(0,0);
 	usleep($wait_click);
+
+	usleep($wait_screen);
 
 	usleep($wait_screen);
 

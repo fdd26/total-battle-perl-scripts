@@ -119,7 +119,7 @@ sub sendMouseLeftClick($$)
 sub main()
 {
 	# Send 150 mouse clicks delayed by 200 ms + randomized 100 ms
-	my $max = 1;
+	my $max = 150;
 
 	my $pt = getMouseXYCoordinates();
 

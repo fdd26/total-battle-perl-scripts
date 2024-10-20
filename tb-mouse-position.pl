@@ -54,13 +54,14 @@ use Data::Dumper;
 #########################################################################################
 #
 #
-# Total Battle - Daily Job Free Mouse Click repeat x 150 every other seconds
+# Total Battle - Mouse Position Locator
 #
 #use strict;
 no strict;
 #
-use warnings;
+#use warnings;
 use v5.14;
+no warnings 'uninitialized';
 
 use Win32::Sound;
 
@@ -118,45 +119,17 @@ sub sendMouseLeftClick($$)
 
 sub main()
 {
-	# Send 150 mouse clicks delayed by 200 ms + randomized 100 ms
-	my $max = 1;
-
-	my $pt = getMouseXYCoordinates();
-
-	my $x = 0;
-	my $y = 0;
-
-	if (0)
-	{
-		$x = 987;
-		$y = 378;
-	}
-
-	print "MOVE Mouse!\n\n";
-
-	if ($x > 0 && $y > 0)
-	{
-		SetCursorPos($x, $y);
-	}
-
-	print "Sleep 5 seconds... GO!\n\n";
-
-	sleep(5);
-
-	print "MOVE AND CLICK!\n\n";
-	if ($x > 0 && $y > 0)
-	{
-		SetCursorPos($x, $y);
-	}
+	# Record 10 mouse positions delayed by 300 ms
+	my $max = 10;
 
 	Win32::Sound::Play("SystemStart");
 
 	for(my $i = 1; $i <= $max; ++$i)
 	{
-		sendMouseLeftClick($x, $y);
+		my $pt = getMouseXYCoordinates();
 		print "[$i]\n";
-		usleep(200000); # 200 ms
-		usleep(int(rand(100000))); # up to 100 ms
+		usleep(300000); # 300 ms
+		Win32::Sound::Play("SystemStart");
 	}
 
 	Win32::Sound::Play("SystemStart");

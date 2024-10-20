@@ -54,7 +54,7 @@ use Data::Dumper;
 #########################################################################################
 #
 #
-# Total Battle - Mouse Position Locator
+# Total Battle - Mouse Click Crypter for 1536x864 Chrome browser with bookmark tab offset
 #
 #use strict;
 no strict;
@@ -117,10 +117,291 @@ sub sendMouseLeftClick($$)
 	mouse_event(0x06, $mx, $my, 0, 0);
 }
 
+#################################################################
+# HALF SCREEN LEFT 100% CHROME / 25% GAME ZOOM
+#################################################################
+
+my $mouse_delta_x_swing = 1;
+my $mouse_delta_y_swing = 1;
+
+#################################################################
+
+my @half_left_telescope_mouse_xy              = qw( 286 722 );
+my @half_left_crypt_menu_mouse_xy             = qw( 276 419 );
+my @half_left_crypt_first_mouse_xy            = qw( 710 428 );
+my @half_left_crypt_middle_mouse_xy           = qw( 497 470 );
+my @half_left_crypt_explore_right_mouse_xy    = qw( 643 669 );
+my @half_left_crypt_speedup_top_menu_mouse_xy = qw( 726 186 );
+
+my @half_left_crypt_speedup_first_mouse_xy    = qw( 630 410 );
+my @half_left_crypt_speedup_second_mouse_xy   = qw( 630 502 );
+my @half_left_crypt_speedup_third_mouse_xy    = qw( 630 592 );
+
+my @half_left_crypt_speedup_close_mouse_xy    = qw( 714 271 );
+
+#################################################################
+# FULL SCREEN 100% CHROME / 25% GAME ZOOM + Chrome Bookmark bar
+#################################################################
+
+my @full_telescope_mouse_xy                   = qw( 564 727 );
+my @full_crypt_menu_mouse_xy                  = qw( 542 435 );
+my @full_crypt_first_mouse_xy                 = qw( 975 447 );
+my @full_crypt_middle_mouse_xy                = qw( 773 488 );
+my @full_crypt_explore_right_mouse_xy         = qw( 916 686 );
+my @full_crypt_speedup_top_menu_mouse_xy      = qw( 995 200 );
+
+my @full_crypt_speedup_first_mouse_xy         = qw( 899 430 );
+my @full_crypt_speedup_second_mouse_xy        = qw( 899 517 );
+my @full_crypt_speedup_third_mouse_xy         = qw( 899 606 );
+
+my @full_crypt_speedup_close_mouse_xy         = qw( 984 284 );
+
+#################################################################
+
+sub half_left_state_machine()
+{
+	my @telescope_mouse_xy              = @half_left_telescope_mouse_xy;
+	my @crypt_menu_mouse_xy             = @half_left_crypt_menu_mouse_xy;
+	my @crypt_first_mouse_xy            = @half_left_crypt_first_mouse_xy;
+	my @crypt_middle_mouse_xy           = @half_left_crypt_middle_mouse_xy;
+	my @crypt_explore_right_mouse_xy    = @half_left_crypt_explore_right_mouse_xy;
+
+	my @crypt_speedup_top_menu_mouse_xy = @half_left_crypt_speedup_top_menu_mouse_xy;
+
+	my @crypt_speedup_first_mouse_xy    = @half_left_crypt_speedup_first_mouse_xy;
+	my @crypt_speedup_second_mouse_xy   = @half_left_crypt_speedup_second_mouse_xy;
+	my @crypt_speedup_third_mouse_xy    = @half_left_crypt_speedup_third_mouse_xy;
+
+	my @crypt_speedup_close_mouse_xy    = @half_left_crypt_speedup_close_mouse_xy;
+
+	# RANDOM offset of [-x, x]
+	my $dx = int(rand($mouse_delta_x_swing * 2)) - int($mouse_delta_x_swing);
+	my $dy = int(rand($mouse_delta_y_swing * 2)) - int($mouse_delta_y_swing);
+
+	my $dw = 150000 + int(rand(100000)); # 150 ms to 250 ms wait delta
+
+	my $wait_move_xy = $dw +    10000; # 10 ms
+	my $wait_click   = $dw +    60000; # 60 ms
+	my $wait_screen  = $dw +   800000; # 800 ms
+	my $wait_crypt   = $dw + 18000000; # 18000 ms
+
+	my @crypt_speedup_mouse_xy = @crypt_speedup_second_mouse_xy;
+
+	SetCursorPos( $telescope_mouse_xy[0]              + $dx, $telescope_mouse_xy[1]           + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	SetCursorPos( $crypt_menu_mouse_xy[0]             + $dx, $crypt_menu_mouse_xy[1]          + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	usleep($wait_screen);
+
+	SetCursorPos( $crypt_first_mouse_xy[0]            + $dx, $crypt_first_mouse_xy[1]         + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	usleep($wait_screen);
+
+	SetCursorPos( $crypt_middle_mouse_xy[0]           + $dx, $crypt_middle_mouse_xy[1]        + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	SetCursorPos( $crypt_explore_right_mouse_xy[0]    + $dx, $crypt_explore_right_mouse_xy[1] + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	SetCursorPos( $crypt_speedup_top_menu_mouse_xy[0] + $dx, $crypt_speedup_top_menu_mouse_xy[1] + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	usleep($wait_screen);
+
+	SetCursorPos( $crypt_speedup_mouse_xy[0]          + $dx, $crypt_speedup_mouse_xy[1]       + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	# 5 speed up clicks
+	usleep($wait_click);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	Win32::Sound::Play("SystemStart");
+
+	usleep($wait_screen);
+
+	SetCursorPos( $crypt_speedup_close_mouse_xy[0]  + $dx, $crypt_speedup_close_mouse_xy[1] + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+	usleep($wait_screen);
+
+	Win32::Sound::Play("SystemStart");
+	usleep($wait_crypt);
+	Win32::Sound::Play("SystemStart");
+}
+
+#################################################################
+
+sub full_screen_state_machine()
+{
+	my @telescope_mouse_xy              = @full_telescope_mouse_xy;
+	my @crypt_menu_mouse_xy             = @full_crypt_menu_mouse_xy;
+	my @crypt_first_mouse_xy            = @full_crypt_first_mouse_xy;
+	my @crypt_middle_mouse_xy           = @full_crypt_middle_mouse_xy;
+	my @crypt_explore_right_mouse_xy    = @full_crypt_explore_right_mouse_xy;
+	my @crypt_speedup_top_menu_mouse_xy = @full_crypt_speedup_top_menu_mouse_xy;
+
+	my @crypt_speedup_first_mouse_xy    = @full_crypt_speedup_first_mouse_xy;
+	my @crypt_speedup_second_mouse_xy   = @full_crypt_speedup_second_mouse_xy;
+	my @crypt_speedup_third_mouse_xy    = @full_crypt_speedup_third_mouse_xy;
+
+	my @crypt_speedup_close_mouse_xy    = @full_crypt_speedup_close_mouse_xy;
+
+	# RANDOM offset of [-x, x]
+	my $dx = int(rand($mouse_delta_x_swing * 2)) - int($mouse_delta_x_swing);
+	my $dy = int(rand($mouse_delta_y_swing * 2)) - int($mouse_delta_y_swing);
+
+	my $dw = 150000 + int(rand(100000)); # 150 ms to 250 ms wait delta
+
+	my $wait_move_xy = $dw +    10000; # 10 ms
+	my $wait_click   = $dw +    60000; # 60 ms
+	my $wait_screen  = $dw +   800000; # 800 ms
+	my $wait_crypt   = $dw + 18000000; # 18000 ms
+
+	my @crypt_speedup_mouse_xy = @crypt_speedup_second_mouse_xy;
+
+	SetCursorPos( $telescope_mouse_xy[0]              + $dx, $telescope_mouse_xy[1]           + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	SetCursorPos( $crypt_menu_mouse_xy[0]             + $dx, $crypt_menu_mouse_xy[1]          + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	usleep($wait_screen);
+
+	SetCursorPos( $crypt_first_mouse_xy[0]            + $dx, $crypt_first_mouse_xy[1]         + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	usleep($wait_screen);
+
+	SetCursorPos( $crypt_middle_mouse_xy[0]           + $dx, $crypt_middle_mouse_xy[1]        + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	SetCursorPos( $crypt_explore_right_mouse_xy[0]    + $dx, $crypt_explore_right_mouse_xy[1] + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	SetCursorPos( $crypt_speedup_top_menu_mouse_xy[0] + $dx, $crypt_speedup_top_menu_mouse_xy[1] + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	usleep($wait_screen);
+
+	SetCursorPos( $crypt_speedup_mouse_xy[0]          + $dx, $crypt_speedup_mouse_xy[1]       + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	# 5 speed up clicks
+	usleep($wait_click);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	Win32::Sound::Play("SystemStart");
+
+	usleep($wait_screen);
+
+	SetCursorPos( $crypt_speedup_close_mouse_xy[0]  + $dx, $crypt_speedup_close_mouse_xy[1] + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+	usleep($wait_screen);
+
+	Win32::Sound::Play("SystemStart");
+	usleep($wait_crypt);
+	Win32::Sound::Play("SystemStart");
+}
+
+#################################################################
+
 sub main()
 {
-	# Record 10 mouse positions delayed by 300 ms
-	my $max = 10;
+	# Send 60 crypt mining sequences
+	my $max = 60;
+
+	my $pt = getMouseXYCoordinates();
+
+	print "Sleep 5 seconds... GO!\n\n";
+	Win32::Sound::Play("SystemStart");
+	sleep(5);
+
 
 	Win32::Sound::Play("SystemStart");
 
@@ -129,6 +410,10 @@ sub main()
 		my $pt = getMouseXYCoordinates();
 		print "[$i]\n";
 		usleep(300000); # 300 ms
+		usleep(int(rand(100000))); # up to 100 ms
+
+		full_screen_state_machine();
+
 		Win32::Sound::Play("SystemStart");
 	}
 

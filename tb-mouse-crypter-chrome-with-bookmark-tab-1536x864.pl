@@ -124,6 +124,8 @@ sub sendMouseLeftClick($$)
 my $mouse_delta_x_swing = 1;
 my $mouse_delta_y_swing = 1;
 
+my $PYTHON3_PATH_EXE    = q{C:\Progra~1\Python312\python.exe};
+
 #################################################################
 
 my @half_left_telescope_mouse_xy              = qw( 286 722 );
@@ -155,6 +157,65 @@ my @full_crypt_speedup_second_mouse_xy        = qw( 899 517 );
 my @full_crypt_speedup_third_mouse_xy         = qw( 899 606 );
 
 my @full_crypt_speedup_close_mouse_xy         = qw( 984 284 );
+
+#################################################################
+
+sub validate_is_crypt_left_menu()
+{
+	my $python3 = $PYTHON3_PATH_EXE;
+	my $script  = q{Is-Crypt-Left-Menu.py};
+	my @lines   = qx($python3 $script);
+	my $output  = join('\n', @lines);
+
+	if ($output =~ m/[\#]+BAD/mi)
+	{
+		print "is_crypt_left_menu: BAD was found\n";
+
+		print "Crypt Left Menu was not found, the game is stuck\n";
+		exit(1);
+		return undef;
+	}
+
+	if ($output =~ m/[\(]+([1-9][0-9]*)[, ]+([1-9][0-9]*)[\)]+/mi)
+	{
+		my $x   = 0 + int($1);
+		my $y   = 0 + int($2);
+		my @pos = ($x, $y);
+		print Dumper \@pos;
+		return \@pos;
+	}
+
+	print Dumper \@lines;
+	return undef;
+}
+
+#################################################################
+
+sub validate_is_crypt_gray_title()
+{
+	my $python3 = $PYTHON3_PATH_EXE;
+	my $script  = q{Is-Crypt-Gray-Title.py};
+	my @lines   = qx($python3 $script);
+	my $output  = join('\n', @lines);
+
+	if ($output =~ m/[\#]+BAD/mi)
+	{
+		print "is_crypt_gray_title: BAD was found\n";
+		return undef;
+	}
+
+	if ($output =~ m/[\(]+([1-9][0-9]*)[, ]+([1-9][0-9]*)[\)]+/mi)
+	{
+		my $x   = 0 + int($1);
+		my $y   = 0 + int($2);
+		my @pos = ($x, $y);
+		print Dumper \@pos;
+		return \@pos;
+	}
+
+	print Dumper \@lines;
+	return undef;
+}
 
 #################################################################
 
@@ -317,9 +378,16 @@ sub full_screen_state_machine()
 
 	usleep($wait_screen);
 
-	usleep($wait_screen);
+	my $crypt_left_menu_pos_ref = validate_is_crypt_left_menu();
+	if (!defined($crypt_left_menu_pos_ref))
+	{
+		print "Could not find the crypt LEFT MENU, try again\n";
+		return 1;
+	}
 
-	SetCursorPos( $crypt_first_mouse_xy[0]            + $dx, $crypt_first_mouse_xy[1]         + $dy );
+	usleep($wait_screen); # 500 ms
+
+	SetCursorPos( $crypt_first_mouse_xy[0]          + $dx, $crypt_first_mouse_xy[1]         + $dy );
 	usleep($wait_move_xy);
 	sendMouseLeftClick(0,0);
 	usleep($wait_click);
@@ -335,7 +403,17 @@ sub full_screen_state_machine()
 
 	usleep($wait_screen);
 
-	SetCursorPos( $crypt_explore_right_mouse_xy[0]    + $dx, $crypt_explore_right_mouse_xy[1] + $dy );
+	my $crypt_gray_title_pos_ref = validate_is_crypt_gray_title();
+
+	if (!defined($crypt_gray_title_pos_ref))
+	{
+		print "Could not find the crypt, try again\n";
+		return 2;
+	}
+
+	#usleep($wait_screen); # 500 ms
+
+	SetCursorPos( $crypt_explore_right_mouse_xy[0]  + $dx, $crypt_explore_right_mouse_xy[1] + $dy );
 	usleep($wait_move_xy);
 	sendMouseLeftClick(0,0);
 	usleep($wait_click);
@@ -395,6 +473,7 @@ sub main()
 {
 	# Send 60 crypt mining sequences
 	my $max = 60;
+	my $r2  = 0;
 
 	my $pt = getMouseXYCoordinates();
 
@@ -409,10 +488,10 @@ sub main()
 	{
 		my $pt = getMouseXYCoordinates();
 		print "[$i]\n";
-		usleep(300000); # 300 ms
-		usleep(int(rand(100000))); # up to 100 ms
+		if ($r2 < 1) { usleep(300000); } # 300 ms
+		else { print "Skip wait...\n"; }
 
-		full_screen_state_machine();
+		$r2 = full_screen_state_machine();
 
 		Win32::Sound::Play("SystemStart");
 	}

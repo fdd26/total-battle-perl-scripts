@@ -294,8 +294,6 @@ sub half_left_state_machine()
 
 	usleep($wait_screen);
 
-	usleep($wait_screen);
-
 	SetCursorPos( $crypt_speedup_mouse_xy[0]          + $dx, $crypt_speedup_mouse_xy[1]       + $dy );
 	usleep($wait_move_xy);
 	sendMouseLeftClick(0,0);
@@ -488,8 +486,15 @@ sub main()
 	{
 		my $pt = getMouseXYCoordinates();
 		print "[$i]\n";
-		if ($r2 < 1) { usleep(300000); } # 300 ms
-		else { print "Skip wait...\n"; }
+
+		if ($r2 < 1)
+		{
+			print "Wait 300ms...\n";
+			usleep(300000); } # 300 ms
+		else
+		{
+			print "Skip wait...\n";
+		}
 
 		$r2 = full_screen_state_machine();
 

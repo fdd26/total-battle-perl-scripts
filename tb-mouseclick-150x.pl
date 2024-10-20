@@ -116,53 +116,53 @@ sub sendMouseLeftClick($$)
 	mouse_event(0x06, $mx, $my, 0, 0);
 }
 
-my $pt = getMouseXYCoordinates();
-
-my $x = 0;
-my $y = 0;
-
-if (0)
+sub main()
 {
-	$x = 987;
-	$y = 378;
+	# Send 150 mouse clicks delayed by 200 ms + randomized 100 ms
+	my $max = 1;
+
+	my $pt = getMouseXYCoordinates();
+
+	my $x = 0;
+	my $y = 0;
+
+	if (0)
+	{
+		$x = 987;
+		$y = 378;
+	}
+
+	print "MOVE Mouse!\n\n";
+
+	if ($x > 0 && $y > 0)
+	{
+		SetCursorPos($x, $y);
+	}
+
+	print "Sleep 5 seconds... GO!\n\n";
+
+	sleep(5);
+
+	print "MOVE AND CLICK!\n\n";
+	if ($x > 0 && $y > 0)
+	{
+		SetCursorPos($x, $y);
+	}
+
+	Win32::Sound::Play("SystemStart");
+
+	for(my $i = 1; $i <= $max; ++$i)
+	{
+		sendMouseLeftClick($x, $y);
+		print "[$i]\n";
+		usleep(200000); # 200 ms
+		usleep(int(rand(100000))); # up to 100 ms
+	}
+
+	Win32::Sound::Play("SystemStart");
 }
 
-print "MOVE Mouse!\n\n";
-
-if ($x > 0 && $y > 0)
-{
-	SetCursorPos($x, $y);
-}
-
-#exit;
-print "Sleep 5 seconds... GO!\n\n";
-
-
-#Win32::Sound::Play("SystemStart");
-sleep(5);
-
-print "MOVE AND CLICK!\n\n";
-
-if ($x > 0 && $y > 0)
-{
-	SetCursorPos($x, $y);
-}
-
-Win32::Sound::Play("SystemStart");
-
-# Send 150 mouse clicks delayed by 200 ms + randomized 100 ms
-my $max = 150;
-
-for(my $i = 1; $i <= $max; ++$i)
-{
-	sendMouseLeftClick($x, $y);
-	print "[$i]\n";
-	usleep(200000); # 200 ms
-	usleep(int(rand(100000))); # up to 100 ms
-}
-
-Win32::Sound::Play("SystemStart");
-
+main();
 exit(0);
 1;
 

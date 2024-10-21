@@ -46,8 +46,8 @@ import pyautogui as pag
 import time
 from python_imagesearch.imagesearch import imagesearch
 
-# Merc frequency is set to 600Hz
-freqMerc = 600
+# Merc frequency is set to 700Hz
+freqMerc = 700
 
 # duration is set to 100 milliseconds
 dur = 500

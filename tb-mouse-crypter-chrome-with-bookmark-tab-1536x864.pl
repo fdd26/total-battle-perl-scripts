@@ -121,8 +121,9 @@ sub sendMouseLeftClick($$)
 # HALF SCREEN LEFT 100% CHROME / 25% GAME ZOOM
 #################################################################
 
-my $mouse_delta_x_swing = 1;
-my $mouse_delta_y_swing = 1;
+# 0 means no random swing
+my $mouse_delta_x_swing = 0;
+my $mouse_delta_y_swing = 0;
 
 my $PYTHON3_PATH_EXE    = q{C:\Progra~1\Python312\python.exe};
 
@@ -176,6 +177,7 @@ sub validate_is_crypt_left_menu()
 		return undef;
 	}
 
+	print Dumper \@lines;
 	if ($output =~ m/[\(]+([1-9][0-9]*)[, ]+([1-9][0-9]*)[\)]+/mi)
 	{
 		my $x   = 0 + int($1);
@@ -185,7 +187,6 @@ sub validate_is_crypt_left_menu()
 		return \@pos;
 	}
 
-	print Dumper \@lines;
 	return undef;
 }
 
@@ -204,6 +205,7 @@ sub validate_is_crypt_gray_title()
 		return undef;
 	}
 
+	print Dumper \@lines;
 	if ($output =~ m/[\(]+([1-9][0-9]*)[, ]+([1-9][0-9]*)[\)]+/mi)
 	{
 		my $x   = 0 + int($1);
@@ -213,7 +215,62 @@ sub validate_is_crypt_gray_title()
 		return \@pos;
 	}
 
+	return undef;
+}
+
+#################################################################
+
+sub validate_is_crypt_green_speedup_title()
+{
+	my $python3 = $PYTHON3_PATH_EXE;
+	my $script  = q{Is-Crypt-Green-Speedup-Title.py};
+	my @lines   = qx($python3 $script);
+	my $output  = join('\n', @lines);
+
+	if ($output =~ m/[\#]+BAD/mi)
+	{
+		print "is_crypt_gray_title: BAD was found\n";
+		return undef;
+	}
+
 	print Dumper \@lines;
+	if ($output =~ m/[\(]+([1-9][0-9]*)[, ]+([1-9][0-9]*)[\)]+/mi)
+	{
+		my $x   = 0 + int($1);
+		my $y   = 0 + int($2);
+		my @pos = ($x, $y);
+		print Dumper \@pos;
+		return \@pos;
+	}
+
+	return undef;
+}
+
+#################################################################
+
+sub find_crypt_position()
+{
+	my $python3 = $PYTHON3_PATH_EXE;
+	my $script  = q{crypt-search.py};
+	my @lines   = qx($python3 $script);
+	my $output  = join('\n', @lines);
+
+	if ($output =~ m/[\#]+BAD/mi)
+	{
+		print "find_crypt_position: BAD was found\n";
+		return undef;
+	}
+
+	print Dumper \@lines;
+	if ($output =~ m/[\(]+([1-9][0-9]*)[, ]+([1-9][0-9]*)[\)]+/mi)
+	{
+		my $x   = 0 + int($1);
+		my $y   = 0 + int($2);
+		my @pos = ($x, $y);
+		print Dumper \@pos;
+		return \@pos;
+	}
+
 	return undef;
 }
 
@@ -244,7 +301,7 @@ sub half_left_state_machine()
 	my $wait_move_xy = $dw +    10000; # 10 ms
 	my $wait_click   = $dw +    60000; # 60 ms
 	my $wait_screen  = $dw +   800000; # 800 ms
-	my $wait_crypt   = $dw + 18000000; # 18000 ms
+	my $wait_crypt   = $dw + 28000000; # 28000 ms
 
 	my @crypt_speedup_mouse_xy = @crypt_speedup_second_mouse_xy;
 
@@ -266,6 +323,7 @@ sub half_left_state_machine()
 	if (!defined($crypt_left_menu_pos_ref))
 	{
 		print "Could not find the crypt LEFT MENU, try again\n";
+		exit(1);
 		return 1;
 	}
 
@@ -319,6 +377,14 @@ sub half_left_state_machine()
 	usleep($wait_click);
 
 	usleep($wait_screen);
+
+	my $crypt_green_title_pos_ref = validate_is_crypt_green_speedup_title();
+
+	if (!defined($crypt_green_title_pos_ref))
+	{
+		print "Could not find the speed up title, try again\n";
+		return 3;
+	}
 
 	# 5 speed up clicks
 	usleep($wait_click);
@@ -353,8 +419,18 @@ sub half_left_state_machine()
 
 #################################################################
 
-sub full_screen_state_machine()
+sub full_screen_state_machine(;$)
 {
+	my $skip = $_[0];
+	if (!defined($skip))
+	{
+		$skip = 0;
+	}
+	else
+	{
+		$skip = 0 + int($skip);
+	}
+
 	my @telescope_mouse_xy              = @full_telescope_mouse_xy;
 	my @crypt_menu_mouse_xy             = @full_crypt_menu_mouse_xy;
 	my @crypt_first_mouse_xy            = @full_crypt_first_mouse_xy;
@@ -377,48 +453,74 @@ sub full_screen_state_machine()
 	my $wait_move_xy = $dw +    10000; # 10 ms
 	my $wait_click   = $dw +    60000; # 60 ms
 	my $wait_screen  = $dw +   800000; # 800 ms
-	my $wait_crypt   = $dw + 18000000; # 18000 ms
+	my $wait_crypt   = $dw + 28000000; # 28000 ms
 
 	my @crypt_speedup_mouse_xy = @crypt_speedup_second_mouse_xy;
 
-	SetCursorPos( $telescope_mouse_xy[0]              + $dx, $telescope_mouse_xy[1]           + $dy );
-	usleep($wait_move_xy);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
-
-	usleep($wait_screen);
-
-	SetCursorPos( $crypt_menu_mouse_xy[0]             + $dx, $crypt_menu_mouse_xy[1]          + $dy );
-	usleep($wait_move_xy);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
-
-	usleep($wait_screen);
-
-	my $crypt_left_menu_pos_ref = validate_is_crypt_left_menu();
-	if (!defined($crypt_left_menu_pos_ref))
+	if($skip < 1)
 	{
-		print "Could not find the crypt LEFT MENU, try again\n";
-		return 1;
+		SetCursorPos( $telescope_mouse_xy[0]              + $dx, $telescope_mouse_xy[1]           + $dy );
+		usleep($wait_move_xy);
+		sendMouseLeftClick(0,0);
+		usleep($wait_click);
+
+		usleep($wait_screen);
+
+		SetCursorPos( $crypt_menu_mouse_xy[0]             + $dx, $crypt_menu_mouse_xy[1]          + $dy );
+		usleep($wait_move_xy);
+		sendMouseLeftClick(0,0);
+		usleep($wait_click);
+
+		usleep($wait_screen);
+
+		my $crypt_left_menu_pos_ref = validate_is_crypt_left_menu();
+		if (!defined($crypt_left_menu_pos_ref))
+		{
+			print "Could not find the crypt LEFT MENU, try again\n";
+			exit(1);
+			return 1;
+		}
+
+		usleep($wait_screen); # 500 ms
+
+		SetCursorPos( $crypt_first_mouse_xy[0]          + $dx, $crypt_first_mouse_xy[1]         + $dy );
+		usleep($wait_move_xy);
+		sendMouseLeftClick(0,0);
+		usleep($wait_click);
+
+		usleep($wait_screen);
+
+		usleep($wait_screen);
+
+		SetCursorPos( $crypt_middle_mouse_xy[0]           + $dx, $crypt_middle_mouse_xy[1]        + $dy );
+		usleep($wait_move_xy);
+		sendMouseLeftClick(0,0);
+		usleep($wait_click);
+
+		usleep($wait_screen);
 	}
+	else
+	{
+		my $crypt_pos_ref = find_crypt_position();
+		if (!defined($crypt_pos_ref))
+		{
+			print "Could not find ANY crypt, try again\n";
+			return 3;
+		}
+		else
+		{
+			@crypt_middle_mouse_xy = @{ $crypt_pos_ref };
 
-	usleep($wait_screen); # 500 ms
+			print "Using NEW CRYPT at = (". ( $crypt_middle_mouse_xy[0] + $dx) . ",". ( $crypt_middle_mouse_xy[1] + $dy ). ");\n";
 
-	SetCursorPos( $crypt_first_mouse_xy[0]          + $dx, $crypt_first_mouse_xy[1]         + $dy );
-	usleep($wait_move_xy);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
+			SetCursorPos( $crypt_middle_mouse_xy[0]       + $dx, $crypt_middle_mouse_xy[1]        + $dy );
+			usleep($wait_move_xy);
+			sendMouseLeftClick(0,0);
+			usleep($wait_click);
 
-	usleep($wait_screen);
-
-	usleep($wait_screen);
-
-	SetCursorPos( $crypt_middle_mouse_xy[0]           + $dx, $crypt_middle_mouse_xy[1]        + $dy );
-	usleep($wait_move_xy);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
-
-	usleep($wait_screen);
+			usleep($wait_screen);
+		}
+	}
 
 	my $crypt_gray_title_pos_ref = validate_is_crypt_gray_title();
 
@@ -452,6 +554,14 @@ sub full_screen_state_machine()
 	usleep($wait_click);
 
 	usleep($wait_screen);
+
+	my $crypt_green_title_pos_ref = validate_is_crypt_green_speedup_title();
+
+	if (!defined($crypt_green_title_pos_ref))
+	{
+		print "Could not find the speed up title, try again\n";
+		return 3;
+	}
 
 	# 5 speed up clicks
 	usleep($wait_click);
@@ -488,8 +598,8 @@ sub full_screen_state_machine()
 
 sub main()
 {
-	# Send 60 crypt mining sequences
-	my $max = 60;
+	# Send many crypt mining sequences
+	my $max = 800;
 	my $r2  = 0;
 
 	my $pt = getMouseXYCoordinates();

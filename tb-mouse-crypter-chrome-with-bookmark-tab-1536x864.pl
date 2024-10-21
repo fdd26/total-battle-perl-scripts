@@ -369,14 +369,12 @@ sub half_left_state_machine()
 
 	usleep($wait_screen);
 
-	usleep($wait_screen);
+	#usleep($wait_screen);
 
 	SetCursorPos( $crypt_speedup_mouse_xy[0]          + $dx, $crypt_speedup_mouse_xy[1]       + $dy );
 	usleep($wait_move_xy);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
 
-	usleep($wait_screen);
+	#usleep($wait_screen);
 
 	my $crypt_green_title_pos_ref = validate_is_crypt_green_speedup_title();
 
@@ -385,6 +383,9 @@ sub half_left_state_machine()
 		print "Could not find the speed up title, try again\n";
 		return 3;
 	}
+
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
 
 	# 5 speed up clicks
 	usleep($wait_click);
@@ -546,14 +547,12 @@ sub full_screen_state_machine(;$)
 
 	usleep($wait_screen);
 
-	usleep($wait_screen);
+	#usleep($wait_screen);
 
 	SetCursorPos( $crypt_speedup_mouse_xy[0]          + $dx, $crypt_speedup_mouse_xy[1]       + $dy );
 	usleep($wait_move_xy);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
 
-	usleep($wait_screen);
+	#usleep($wait_screen);
 
 	my $crypt_green_title_pos_ref = validate_is_crypt_green_speedup_title();
 
@@ -562,6 +561,9 @@ sub full_screen_state_machine(;$)
 		print "Could not find the speed up title, try again\n";
 		return 3;
 	}
+
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
 
 	# 5 speed up clicks
 	usleep($wait_click);

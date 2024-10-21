@@ -32,7 +32,7 @@
 #
 # OR double-click on Is-Crypt-Gray-Title.py
 #
-# OPEN crypt-gray-title.png to test, you should hear some beeps.
+# OPEN crypt-green-speedup-title.png to test, you should hear some beeps.
 #
 #####################################################################
 #
@@ -57,7 +57,7 @@ dur = 500
 i = 1
 while i < 10:
     # 25% resolution square image search
-    pos = imagesearch("crypt-gray-title.png")
+    pos = imagesearch("crypt-green-speedup-title.png")
     if pos[0] != -1:
         winsound.Beep(freqMerc, dur)
         print( pos )

@@ -28,9 +28,9 @@
 # pip3 install python_imagesearch
 #
 # TYPE THIS to run the program
-# python.exe Is-Crypt-Gray-Title.py
+# python.exe Is-Crypt-Green-Speedup-Title.py
 #
-# OR double-click on Is-Crypt-Gray-Title.py
+# OR double-click on Is-Crypt-Green-Speedup-Title.py
 #
 # OPEN crypt-green-speedup-title.png to test, you should hear some beeps.
 #

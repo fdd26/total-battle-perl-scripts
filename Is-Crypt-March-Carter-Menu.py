@@ -46,8 +46,8 @@ import pyautogui as pag
 import time
 from python_imagesearch.imagesearch import imagesearch
 
-# Merc frequency is set to 700Hz
-freqMerc = 700
+# Merc frequency is set to 400Hz
+freqMerc = 400
 
 # duration is set to 100 milliseconds
 dur = 500
@@ -55,20 +55,24 @@ dur = 500
 
 # while loops
 i = 1
-while i < 10:
+notfound = 0
+while i < 1800:
     # 25% resolution square image search
     pos = imagesearch("crypt-march-carter-menu.png")
     if pos[0] != -1:
-        winsound.Beep(freqMerc, dur)
-        print( pos )
+        #winsound.Beep(freqMerc, dur)
+        print( str( pos ) )
+        # Sleep a little before looping
+        time.sleep(0.5)
         del pos
+    else:
+        i += 1
+        notfound += 1
+        print( "\n# Try again [" + str( i ) + "]\n" )
+
+    if notfound > 5:
+        print( "\n# Clear [" + str( i ) + "]\n" )
         exit( 0 )
-
-    # Sleep a little before looping
-    time.sleep(0.05)
-
-    i += 1
-    print( "\n# Try again [" + str( i ) + "]\n" )
 
 print( "\n#BAD\n" )
 exit( 1 )

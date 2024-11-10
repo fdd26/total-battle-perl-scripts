@@ -666,7 +666,7 @@ sub main()
 		my $pt = getMouseXYCoordinates();
 		print "[$i]\t";
 		print strftime("%Y-%m-%d %H:%M:%S", localtime(time) );
-
+		print "\t with GOOD [$good]";
 		print "\n";
 
 		if ($r2 < 1)
@@ -686,6 +686,17 @@ sub main()
 			++$retry;
 			print "BAD RETRY... [$retry] after GOOD [$good]\n";
 			print strftime("%Y-%m-%d %H:%M:%S", localtime(time) );
+			$good = 0;
+		}
+		elsif ($r2 == 0)
+		{
+			++$good;
+
+			if ($good >= 10)
+			{
+				print "RESET BAD RETRY... [$retry] after GOOD [$good]\n";
+				$retry = 0;
+			}
 		}
 
 		if ($retry > 3)

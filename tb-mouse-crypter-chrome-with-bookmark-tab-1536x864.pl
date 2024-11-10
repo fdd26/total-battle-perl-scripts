@@ -50,6 +50,9 @@ my @rem = ();
 use strict;
 use warnings;
 use Data::Dumper;
+use POSIX qw(strftime);
+#use Time::Piece;
+#use DateTime;
 
 #########################################################################################
 #
@@ -148,7 +151,16 @@ my @half_left_crypt_speedup_close_mouse_xy    = qw( 714 271 );
 
 my @full_telescope_mouse_xy                   = qw( 564 727 );
 my @full_crypt_menu_mouse_xy                  = qw( 542 435 );
-my @full_crypt_first_mouse_xy                 = qw( 975 447 );
+
+my @full_crypt_menu_first_mouse_xy            = qw( 975 445 );
+my @full_crypt_menu_second_mouse_xy           = qw( 975 525 );
+my @full_crypt_menu_third_mouse_xy            = qw( 975 605 );
+my @full_crypt_menu_fourth_mouse_xy           = qw( 975 685 );
+
+my @full_crypt_first_mouse_xy                 = @full_crypt_menu_third_mouse_xy;
+
+#my @full_crypt_first_mouse_xy                = qw( 975 445 );
+
 my @full_crypt_middle_mouse_xy                = qw( 773 488 );
 my @full_crypt_explore_right_mouse_xy         = qw( 916 686 );
 my @full_crypt_speedup_top_menu_mouse_xy      = qw( 995 200 );
@@ -173,7 +185,7 @@ sub validate_is_crypt_left_menu()
 		print "is_crypt_left_menu: BAD was found\n";
 
 		print "Crypt Left Menu was not found, the game is stuck\n";
-		exit(1);
+		#exit(1);
 		return undef;
 	}
 
@@ -323,7 +335,7 @@ sub half_left_state_machine()
 	if (!defined($crypt_left_menu_pos_ref))
 	{
 		print "Could not find the crypt LEFT MENU, try again\n";
-		exit(1);
+		#exit(1);
 		return 1;
 	}
 
@@ -416,13 +428,25 @@ sub half_left_state_machine()
 	Win32::Sound::Play("SystemStart");
 	usleep($wait_crypt);
 	Win32::Sound::Play("SystemStart");
+
+	return 0;
 }
 
 #################################################################
 
-sub full_screen_state_machine(;$)
+sub full_screen_state_machine(;$;$)
 {
-	my $skip = $_[0];
+	my $i = $_[0];
+	if (!defined($i))
+	{
+		$i = -1;
+	}
+	else
+	{
+		$i = int($i) % 4;
+	}
+
+	my $skip = $_[1];
 	if (!defined($skip))
 	{
 		$skip = 0;
@@ -430,6 +454,26 @@ sub full_screen_state_machine(;$)
 	else
 	{
 		$skip = 0 + int($skip);
+	}
+
+	if ($i >= 0)
+	{
+		if ($i == 1)
+		{
+			@full_crypt_first_mouse_xy = @full_crypt_menu_second_mouse_xy;
+		}
+		elsif ($i == 2)
+		{
+			@full_crypt_first_mouse_xy = @full_crypt_menu_third_mouse_xy;
+		}
+		elsif ($i == 3)
+		{
+			@full_crypt_first_mouse_xy = @full_crypt_menu_fourth_mouse_xy;
+		}
+		else
+		{
+			@full_crypt_first_mouse_xy = @full_crypt_menu_first_mouse_xy;
+		}
 	}
 
 	my @telescope_mouse_xy              = @full_telescope_mouse_xy;
@@ -478,7 +522,7 @@ sub full_screen_state_machine(;$)
 		if (!defined($crypt_left_menu_pos_ref))
 		{
 			print "Could not find the crypt LEFT MENU, try again\n";
-			exit(1);
+			#exit(1);
 			return 1;
 		}
 
@@ -594,6 +638,8 @@ sub full_screen_state_machine(;$)
 	Win32::Sound::Play("SystemStart");
 	usleep($wait_crypt);
 	Win32::Sound::Play("SystemStart");
+
+	return 0;
 }
 
 #################################################################
@@ -601,8 +647,10 @@ sub full_screen_state_machine(;$)
 sub main()
 {
 	# Send many crypt mining sequences
-	my $max = 800;
-	my $r2  = 0;
+	my $max   = 2800;
+	my $r2    = 0;
+	my $retry = 0;
+	my $good  = 0;
 
 	my $pt = getMouseXYCoordinates();
 
@@ -616,18 +664,37 @@ sub main()
 	for(my $i = 1; $i <= $max; ++$i)
 	{
 		my $pt = getMouseXYCoordinates();
-		print "[$i]\n";
+		print "[$i]\t";
+		print strftime("%Y-%m-%d %H:%M:%S", localtime(time) );
+
+		print "\n";
 
 		if ($r2 < 1)
 		{
 			print "Wait 300ms...\n";
-			usleep(300000); } # 300 ms
+			usleep(300000); # 300 ms
+		}
 		else
 		{
 			print "Skip wait...\n";
 		}
 
-		$r2 = full_screen_state_machine();
+		$r2 = full_screen_state_machine($i % 4);
+
+		if ($r2 == 1)
+		{
+			++$retry;
+			print "BAD RETRY... [$retry] after GOOD [$good]\n";
+			print strftime("%Y-%m-%d %H:%M:%S", localtime(time) );
+		}
+
+		if ($retry > 3)
+		{
+			print "BAD RETRY EXITING... [$retry] after GOOD [$good]\n";
+			print strftime("%Y-%m-%d %H:%M:%S", localtime(time) );
+			print "\n";
+			exit(1);
+		}
 
 		Win32::Sound::Play("SystemStart");
 	}

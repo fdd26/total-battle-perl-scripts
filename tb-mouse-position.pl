@@ -120,7 +120,7 @@ sub sendMouseLeftClick($$)
 sub main()
 {
 	# Record 10 mouse positions delayed by 300 ms
-	my $max = 10;
+	my $max = 5;
 
 	Win32::Sound::Play("SystemStart");
 

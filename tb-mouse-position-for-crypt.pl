@@ -122,14 +122,41 @@ my @crypt_menu_second = qw{975 525};
 my @crypt_menu_third  = qw{975 605};
 my @crypt_menu_fourth = qw{975 685};
 
+
+my @desktop_telescope_mouse_xy                 = qw( 570 905 );
+my @desktop_crypt_menu_mouse_xy                = qw( 575 520 );
+
+my @desktop_crypt_menu_first_mouse_xy          = qw( 1100 530 );
+my @desktop_crypt_menu_second_mouse_xy         = qw( 1100 632 );
+my @desktop_crypt_menu_third_mouse_xy          = qw( 1100 730 );
+my @desktop_crypt_menu_fourth_mouse_xy         = qw( 1100 830 );
+
+my @desktop_crypt_first_mouse_xy               = @desktop_crypt_menu_third_mouse_xy;
+
+#my @desktop_crypt_first_mouse_xy              = qw( 1100 530 );
+
+my @desktop_crypt_middle_mouse_xy              = qw( 840 587 );
+my @desktop_crypt_middle_mouse_lower_xy        = qw( 890 613 );
+
+my @desktop_crypt_explore_right_mouse_xy       = qw( 1020 830 );
+my @desktop_crypt_misclick_top_menu_mouse_xy   = qw( 1122 410 );
+my @desktop_crypt_speedup_top_menu_mouse_xy    = qw( 1120 212 );
+
+my @desktop_crypt_speedup_first_mouse_xy       = qw( 1010 510 );
+my @desktop_crypt_speedup_second_mouse_xy      = qw( 1010 624 );
+my @desktop_crypt_speedup_third_mouse_xy       = qw( 1010 624 );#
+
+my @desktop_crypt_speedup_close_mouse_xy       = qw( 1106 335 );
+
+
 sub main()
 {
 	# Record 10 mouse positions delayed by 300 ms
-	my $max = 5;
+	my $max = 12;
 
-	Win32::Sound::Play("SystemStart");
+	#Win32::Sound::Play("SystemStart");
 
-	usleep(300000); # 300 ms
+	#usleep(300000); # 300 ms
 	Win32::Sound::Play("SystemStart");
 
 	for(my $i = 1; $i <= $max; ++$i)

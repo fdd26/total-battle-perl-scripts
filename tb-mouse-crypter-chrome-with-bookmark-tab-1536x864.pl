@@ -415,7 +415,8 @@ sub half_left_state_machine()
 		}
 		elsif (0)
 		{
-			print "Misclick green title window was found at [" . $crypt_misclick_green_title_pos_ref[0] .",". $crypt_misclick_green_title_pos_ref[1] . "]\n";
+			my @crypt_misclick_green_title_pos = @{$crypt_misclick_green_title_pos_ref};
+			print "Misclick green title window was found at [" . $crypt_misclick_green_title_pos[0] .",". $crypt_misclick_green_title_pos[1] . "]\n";
 
 			# Cursor is at: 994, 348
 			moveMouseCursorPosition( $crypt_misclick_top_menu_mouse_xy[0] + $dx, $crypt_misclick_top_menu_mouse_xy[1] + $dy );
@@ -430,6 +431,8 @@ sub half_left_state_machine()
 			{
 				print "Misclick window was closed\n";
 
+				print "MOVE MOUSE LOWER [". $crypt_middle_mouse_lower_xy[0] .",". $crypt_middle_mouse_lower_xy[1] . "]\n";
+
 				#my @full_crypt_middle_mouse_xy                = qw( 773 488 );
 				# 970, 604
 				moveMouseCursorPosition( $crypt_middle_mouse_lower_xy[0]  + $dx, $crypt_middle_mouse_lower_xy[1]      + $dy );
@@ -439,7 +442,10 @@ sub half_left_state_machine()
 
 				usleep($wait_screen);
 
+				print "Validate Crypt Gray Title #2\n";
+
 				my $crypt_gray_title_pos_ref2 = validate_is_crypt_gray_title();
+				print Dumper $crypt_gray_title_pos_ref2;
 				if (!defined($crypt_gray_title_pos_ref2))
 				{
 					return 23;
@@ -684,7 +690,8 @@ sub full_screen_state_machine(;$;$)
 		}
 		elsif (0)
 		{
-			print "Misclick green title window was found at [" . $crypt_misclick_green_title_pos_ref[0] .",". $crypt_misclick_green_title_pos_ref[1] . "]\n";
+			my @crypt_misclick_green_title_pos = @{$crypt_misclick_green_title_pos_ref};
+			print "Misclick green title window was found at [" . $crypt_misclick_green_title_pos[0] .",". $crypt_misclick_green_title_pos[1] . "]\n";
 
 			# Cursor is at: 994, 348
 			moveMouseCursorPosition( $crypt_misclick_top_menu_mouse_xy[0] + $dx, $crypt_misclick_top_menu_mouse_xy[1] + $dy );
@@ -699,6 +706,8 @@ sub full_screen_state_machine(;$;$)
 			{
 				print "Misclick window was closed\n";
 
+				print "MOVE MOUSE LOWER [". $crypt_middle_mouse_lower_xy[0] .",". $crypt_middle_mouse_lower_xy[1] . "]\n";
+
 				#my @full_crypt_middle_mouse_xy                = qw( 773 488 );
 				# 970, 604
 				moveMouseCursorPosition( $crypt_middle_mouse_lower_xy[0]  + $dx, $crypt_middle_mouse_lower_xy[1]      + $dy );
@@ -708,7 +717,10 @@ sub full_screen_state_machine(;$;$)
 
 				usleep($wait_screen);
 
+				print "Validate Crypt Gray Title #2\n";
+
 				my $crypt_gray_title_pos_ref2 = validate_is_crypt_gray_title();
+				print Dumper $crypt_gray_title_pos_ref2;
 				if (!defined($crypt_gray_title_pos_ref2))
 				{
 					return 23;

@@ -241,7 +241,7 @@ sub validate_is_crypt_green_speedup_title()
 
 	if ($output =~ m/[\#]+BAD/mi)
 	{
-		print "is_crypt_gray_title: BAD was found\n";
+		print "is_crypt_green_speedup_title: BAD was found\n";
 		return undef;
 	}
 
@@ -290,19 +290,19 @@ sub find_crypt_position()
 
 sub half_left_state_machine()
 {
-	my @telescope_mouse_xy              = @half_left_telescope_mouse_xy;
-	my @crypt_menu_mouse_xy             = @half_left_crypt_menu_mouse_xy;
-	my @crypt_first_mouse_xy            = @half_left_crypt_first_mouse_xy;
-	my @crypt_middle_mouse_xy           = @half_left_crypt_middle_mouse_xy;
-	my @crypt_explore_right_mouse_xy    = @half_left_crypt_explore_right_mouse_xy;
+	my @telescope_mouse_xy               = @half_left_telescope_mouse_xy;
+	my @crypt_menu_mouse_xy              = @half_left_crypt_menu_mouse_xy;
+	my @crypt_first_mouse_xy             = @half_left_crypt_first_mouse_xy;
+	my @crypt_middle_mouse_xy            = @half_left_crypt_middle_mouse_xy;
+	my @crypt_explore_right_mouse_xy     = @half_left_crypt_explore_right_mouse_xy;
 
-	my @crypt_speedup_top_menu_mouse_xy = @half_left_crypt_speedup_top_menu_mouse_xy;
+	my @crypt_speedup_top_menu_mouse_xy  = @half_left_crypt_speedup_top_menu_mouse_xy;
 
-	my @crypt_speedup_first_mouse_xy    = @half_left_crypt_speedup_first_mouse_xy;
-	my @crypt_speedup_second_mouse_xy   = @half_left_crypt_speedup_second_mouse_xy;
-	my @crypt_speedup_third_mouse_xy    = @half_left_crypt_speedup_third_mouse_xy;
+	my @crypt_speedup_first_mouse_xy     = @half_left_crypt_speedup_first_mouse_xy;
+	my @crypt_speedup_second_mouse_xy    = @half_left_crypt_speedup_second_mouse_xy;
+	my @crypt_speedup_third_mouse_xy     = @half_left_crypt_speedup_third_mouse_xy;
 
-	my @crypt_speedup_close_mouse_xy    = @half_left_crypt_speedup_close_mouse_xy;
+	my @crypt_speedup_close_mouse_xy     = @half_left_crypt_speedup_close_mouse_xy;
 
 	# RANDOM offset of [-x, x]
 	my $dx = int(rand($mouse_delta_x_swing * 2)) - int($mouse_delta_x_swing);
@@ -651,6 +651,7 @@ sub main()
 	my $r2    = 0;
 	my $retry = 0;
 	my $good  = 0;
+	my $total = 0;
 
 	my $pt = getMouseXYCoordinates();
 
@@ -666,7 +667,7 @@ sub main()
 		my $pt = getMouseXYCoordinates();
 		print "[$i]\t";
 		print strftime("%Y-%m-%d %H:%M:%S", localtime(time) );
-		print "\t with GOOD [$good]";
+		print "\t with GOOD [$good] / [$total]";
 		print "\n";
 
 		if ($r2 < 1)
@@ -684,24 +685,26 @@ sub main()
 		if ($r2 == 1)
 		{
 			++$retry;
-			print "BAD RETRY... [$retry] after GOOD [$good]\n";
+			print "BAD RETRY... [$retry] after GOOD [$good] / [$total]\n";
 			print strftime("%Y-%m-%d %H:%M:%S", localtime(time) );
+			print "\n";
 			$good = 0;
 		}
 		elsif ($r2 == 0)
 		{
 			++$good;
+			++$total;
 
 			if ($good >= 10)
 			{
-				print "RESET BAD RETRY... [$retry] after GOOD [$good]\n";
+				print "RESET BAD RETRY... [$retry] after GOOD [$good] / [$total]\n";
 				$retry = 0;
 			}
 		}
 
 		if ($retry > 3)
 		{
-			print "BAD RETRY EXITING... [$retry] after GOOD [$good]\n";
+			print "BAD RETRY EXITING... [$retry] after GOOD [$good] / [$total]\n";
 			print strftime("%Y-%m-%d %H:%M:%S", localtime(time) );
 			print "\n";
 			exit(1);

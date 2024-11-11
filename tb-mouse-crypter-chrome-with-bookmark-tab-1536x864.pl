@@ -128,9 +128,9 @@ sub sendMouseLeftClick($$)
 	mouse_event(0x06, $mx, $my, 0, 0);
 }
 
-#################################################################
+#############################################################################
 # HALF SCREEN LEFT 100% CHROME / 25% GAME ZOOM
-#################################################################
+#############################################################################
 
 # 0 means no random swing
 my $mouse_delta_x_swing = 0;
@@ -138,51 +138,111 @@ my $mouse_delta_y_swing = 0;
 
 my $PYTHON3_PATH_EXE    = q{C:\Progra~1\Python312\python.exe};
 
-#################################################################
+#############################################################################
 
-my @half_left_telescope_mouse_xy              = qw( 286 722 );
-my @half_left_crypt_menu_mouse_xy             = qw( 276 419 );
-my @half_left_crypt_first_mouse_xy            = qw( 710 428 );
-my @half_left_crypt_middle_mouse_xy           = qw( 497 470 );
-my @half_left_crypt_explore_right_mouse_xy    = qw( 643 669 );
-my @half_left_crypt_speedup_top_menu_mouse_xy = qw( 726 186 );
+my @half_left_telescope_mouse_xy               = qw( 286 722 );
+my @half_left_crypt_menu_mouse_xy              = qw( 276 419 );
 
-my @half_left_crypt_speedup_first_mouse_xy    = qw( 630 410 );
-my @half_left_crypt_speedup_second_mouse_xy   = qw( 630 502 );
-my @half_left_crypt_speedup_third_mouse_xy    = qw( 630 592 );
+my @half_left_crypt_menu_first_mouse_xy        = qw( 710 425 );
+my @half_left_crypt_menu_second_mouse_xy       = qw( 710 505 );
+my @half_left_crypt_menu_third_mouse_xy        = qw( 710 585 );
+my @half_left_crypt_menu_fourth_mouse_xy       = qw( 710 665 );
 
-my @half_left_crypt_speedup_close_mouse_xy    = qw( 714 271 );
+my @half_left_crypt_first_mouse_xy             = @half_left_crypt_menu_third_mouse_xy;
+#my @half_left_crypt_first_mouse_xy            = qw( 710 428 );
 
-#################################################################
+my @half_left_crypt_middle_mouse_xy            = qw( 497 470 );
+my @half_left_crypt_middle_mouse_lower_xy      = qw( 697 570 );
+
+my @half_left_crypt_explore_right_mouse_xy     = qw( 643 669 );
+my @half_left_crypt_misclick_top_menu_mouse_xy = qw( 695 668 );
+
+my @half_left_crypt_speedup_top_menu_mouse_xy  = qw( 726 186 );
+
+my @half_left_crypt_speedup_first_mouse_xy     = qw( 630 410 );
+my @half_left_crypt_speedup_second_mouse_xy    = qw( 630 502 );
+my @half_left_crypt_speedup_third_mouse_xy     = qw( 630 592 );
+
+my @half_left_crypt_speedup_close_mouse_xy     = qw( 714 271 );
+
+#############################################################################
 # FULL SCREEN 100% CHROME / 25% GAME ZOOM + Chrome Bookmark bar
-#################################################################
+#############################################################################
 
-my @full_telescope_mouse_xy                   = qw( 564 727 );
-my @full_crypt_menu_mouse_xy                  = qw( 542 435 );
+my @full_telescope_mouse_xy                    = qw( 564 727 );
+my @full_crypt_menu_mouse_xy                   = qw( 542 435 );
 
-my @full_crypt_menu_first_mouse_xy            = qw( 975 445 );
-my @full_crypt_menu_second_mouse_xy           = qw( 975 525 );
-my @full_crypt_menu_third_mouse_xy            = qw( 975 605 );
-my @full_crypt_menu_fourth_mouse_xy           = qw( 975 685 );
+my @full_crypt_menu_first_mouse_xy             = qw( 975 445 );
+my @full_crypt_menu_second_mouse_xy            = qw( 975 525 );
+my @full_crypt_menu_third_mouse_xy             = qw( 975 605 );
+my @full_crypt_menu_fourth_mouse_xy            = qw( 975 685 );
 
-my @full_crypt_first_mouse_xy                 = @full_crypt_menu_third_mouse_xy;
+my @full_crypt_first_mouse_xy                  = @full_crypt_menu_third_mouse_xy;
 
-#my @full_crypt_first_mouse_xy                = qw( 975 445 );
+#my @full_crypt_first_mouse_xy                 = qw( 975 445 );
 
-my @full_crypt_middle_mouse_xy                = qw( 773 488 );
-my @full_crypt_middle_mouse_lower_xy          = qw( 970 604 );
+my @full_crypt_middle_mouse_xy                 = qw( 773 488 );
+my @full_crypt_middle_mouse_lower_xy           = qw( 970 604 );
 
-my @full_crypt_explore_right_mouse_xy         = qw( 916 686 );
-my @full_crypt_misclick_top_menu_mouse_xy     = qw( 995 348 );
-my @full_crypt_speedup_top_menu_mouse_xy      = qw( 995 200 );
+my @full_crypt_explore_right_mouse_xy          = qw( 916 686 );
+my @full_crypt_misclick_top_menu_mouse_xy      = qw( 995 348 );
+my @full_crypt_speedup_top_menu_mouse_xy       = qw( 995 200 );
 
-my @full_crypt_speedup_first_mouse_xy         = qw( 899 430 );
-my @full_crypt_speedup_second_mouse_xy        = qw( 899 517 );
-my @full_crypt_speedup_third_mouse_xy         = qw( 899 606 );
+my @full_crypt_speedup_first_mouse_xy          = qw( 899 430 );
+my @full_crypt_speedup_second_mouse_xy         = qw( 899 517 );
+my @full_crypt_speedup_third_mouse_xy          = qw( 899 606 );
 
-my @full_crypt_speedup_close_mouse_xy         = qw( 984 284 );
+my @full_crypt_speedup_close_mouse_xy          = qw( 984 284 );
 
-#################################################################
+#############################################################################
+# DESKTOP SCREEN 100% CHROME / 25% GAME ZOOM + Chrome Bookmark bar
+#############################################################################
+
+my @desktop_telescope_mouse_xy                 = qw( 564 727 );
+my @desktop_crypt_menu_mouse_xy                = qw( 542 435 );
+
+my @desktop_crypt_menu_first_mouse_xy          = qw( 975 445 );
+my @desktop_crypt_menu_second_mouse_xy         = qw( 975 525 );
+my @desktop_crypt_menu_third_mouse_xy          = qw( 975 605 );
+my @desktop_crypt_menu_fourth_mouse_xy         = qw( 975 685 );
+
+my @desktop_crypt_first_mouse_xy               = @desktop_crypt_menu_third_mouse_xy;
+
+#my @desktop_crypt_first_mouse_xy              = qw( 975 445 );
+
+my @desktop_crypt_middle_mouse_xy              = qw( 773 488 );
+my @desktop_crypt_middle_mouse_lower_xy        = qw( 970 604 );
+
+my @desktop_crypt_explore_right_mouse_xy       = qw( 916 686 );
+my @desktop_crypt_misclick_top_menu_mouse_xy   = qw( 995 348 );
+my @desktop_crypt_speedup_top_menu_mouse_xy    = qw( 995 200 );
+
+my @desktop_crypt_speedup_first_mouse_xy       = qw( 899 430 );
+my @desktop_crypt_speedup_second_mouse_xy      = qw( 899 517 );
+my @desktop_crypt_speedup_third_mouse_xy       = qw( 899 606 );
+
+my @desktop_crypt_speedup_close_mouse_xy       = qw( 984 284 );
+
+#############################################################################
+# Default EMPTY global state machine variables
+#############################################################################
+
+@telescope_mouse_xy                         = ();
+@crypt_menu_mouse_xy                        = ();
+@crypt_first_mouse_xy                       = ();
+@crypt_middle_mouse_xy                      = ();
+@crypt_middle_mouse_lower_xy                = ();
+@crypt_explore_right_mouse_xy               = ();
+@crypt_misclick_top_menu_mouse_xy           = ();
+@crypt_speedup_top_menu_mouse_xy            = ();
+
+@crypt_speedup_first_mouse_xy               = ();
+@crypt_speedup_second_mouse_xy              = ();
+@crypt_speedup_third_mouse_xy               = ();
+
+@crypt_speedup_close_mouse_xy               = ();
+
+#############################################################################
 
 sub validate_is_crypt_left_menu()
 {
@@ -214,7 +274,7 @@ sub validate_is_crypt_left_menu()
 	return undef;
 }
 
-#################################################################
+#############################################################################
 
 sub validate_is_crypt_gray_title()
 {
@@ -243,7 +303,7 @@ sub validate_is_crypt_gray_title()
 	return undef;
 }
 
-#################################################################
+#############################################################################
 
 sub validate_is_crypt_green_misclick_title()
 {
@@ -272,7 +332,7 @@ sub validate_is_crypt_green_misclick_title()
 	return undef;
 }
 
-#################################################################
+#############################################################################
 
 sub validate_is_crypt_green_speedup_title()
 {
@@ -301,7 +361,7 @@ sub validate_is_crypt_green_speedup_title()
 	return undef;
 }
 
-#################################################################
+#############################################################################
 
 sub find_crypt_position()
 {
@@ -330,212 +390,70 @@ sub find_crypt_position()
 	return undef;
 }
 
-#################################################################
+#############################################################################
 
 sub half_left_state_machine()
 {
-	my @telescope_mouse_xy               = @half_left_telescope_mouse_xy;
-	my @crypt_menu_mouse_xy              = @half_left_crypt_menu_mouse_xy;
-	my @crypt_first_mouse_xy             = @half_left_crypt_first_mouse_xy;
-	my @crypt_middle_mouse_xy            = @half_left_crypt_middle_mouse_xy;
-	my @crypt_middle_mouse_lower_xy      = @full_crypt_middle_mouse_lower_xy;
-	my @crypt_explore_right_mouse_xy     = @half_left_crypt_explore_right_mouse_xy;
-
-	my @crypt_misclick_top_menu_mouse_xy = @full_crypt_misclick_top_menu_mouse_xy;
-	my @crypt_speedup_top_menu_mouse_xy  = @half_left_crypt_speedup_top_menu_mouse_xy;
-
-	my @crypt_speedup_first_mouse_xy     = @half_left_crypt_speedup_first_mouse_xy;
-	my @crypt_speedup_second_mouse_xy    = @half_left_crypt_speedup_second_mouse_xy;
-	my @crypt_speedup_third_mouse_xy     = @half_left_crypt_speedup_third_mouse_xy;
-
-	my @crypt_speedup_close_mouse_xy     = @half_left_crypt_speedup_close_mouse_xy;
-
-	# RANDOM offset of [-x, x]
-	my $dx = int(rand($mouse_delta_x_swing * 2)) - int($mouse_delta_x_swing);
-	my $dy = int(rand($mouse_delta_y_swing * 2)) - int($mouse_delta_y_swing);
-
-	my $dw = 150000 + int(rand(100000)); # 150 ms to 250 ms wait delta
-
-	my $wait_move_xy = $dw +    10000; # 10 ms
-	my $wait_click   = $dw +    60000; # 60 ms
-	my $wait_screen  = $dw +   800000; # 800 ms
-	my $wait_crypt   = $dw + 28000000; # 28000 ms
-
-	my @crypt_speedup_mouse_xy = @crypt_speedup_second_mouse_xy;
-
-	moveMouseCursorPosition( $telescope_mouse_xy[0]              + $dx, $telescope_mouse_xy[1]           + $dy );
-	usleep($wait_move_xy);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
-
-	usleep($wait_screen);
-
-	moveMouseCursorPosition( $crypt_menu_mouse_xy[0]             + $dx, $crypt_menu_mouse_xy[1]          + $dy );
-	usleep($wait_move_xy);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
-
-	usleep($wait_screen);
-
-	my $crypt_left_menu_pos_ref = validate_is_crypt_left_menu();
-	if (!defined($crypt_left_menu_pos_ref))
+	my $i = $_[0];
+	if (!defined($i))
 	{
-		print "Could not find the crypt LEFT MENU, try again\n";
-		#exit(1);
-		return 1;
+		$i = -1;
+	}
+	else
+	{
+		$i = int($i) % 4;
 	}
 
-	usleep($wait_screen); # 500 ms
-
-	moveMouseCursorPosition( $crypt_first_mouse_xy[0]          + $dx, $crypt_first_mouse_xy[1]         + $dy );
-	usleep($wait_move_xy);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
-
-	usleep($wait_screen);
-
-	usleep($wait_screen);
-
-	moveMouseCursorPosition( $crypt_middle_mouse_xy[0]           + $dx, $crypt_middle_mouse_xy[1]        + $dy );
-	usleep($wait_move_xy);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
-
-	usleep($wait_screen);
-
-	my $crypt_gray_title_pos_ref = validate_is_crypt_gray_title();
-
-	if (!defined($crypt_gray_title_pos_ref))
+	my $skip = $_[1];
+	if (!defined($skip))
 	{
-		my $crypt_misclick_green_title_pos_ref = validate_is_crypt_green_misclick_title();
-		if (!defined($crypt_gray_title_pos_ref))
+		$skip = 0;
+	}
+	else
+	{
+		$skip = 0 + int($skip);
+	}
+
+	if ($i >= 0)
+	{
+		if ($i == 1)
 		{
-			print "Could not find the crypt, nor misclick green title, try again\n";
-			return 21;
+			@half_left_crypt_first_mouse_xy = @half_left_crypt_menu_second_mouse_xy;
 		}
-		elsif (0)
+		elsif ($i == 2)
 		{
-			my @crypt_misclick_green_title_pos = @{$crypt_misclick_green_title_pos_ref};
-			print "Misclick green title window was found at [" . $crypt_misclick_green_title_pos[0] .",". $crypt_misclick_green_title_pos[1] . "]\n";
-
-			# Cursor is at: 994, 348
-			moveMouseCursorPosition( $crypt_misclick_top_menu_mouse_xy[0] + $dx, $crypt_misclick_top_menu_mouse_xy[1] + $dy );
-			usleep($wait_move_xy);
-			sendMouseLeftClick(0,0);
-			usleep($wait_click);
-
-			usleep($wait_screen);
-
-			my $crypt_misclick_green_title_pos_ref2 = validate_is_crypt_green_misclick_title();
-			if (!defined($crypt_misclick_green_title_pos_ref2))
-			{
-				print "Misclick window was closed\n";
-
-				print "MOVE MOUSE LOWER [". $crypt_middle_mouse_lower_xy[0] .",". $crypt_middle_mouse_lower_xy[1] . "]\n";
-
-				#my @full_crypt_middle_mouse_xy                = qw( 773 488 );
-				# 970, 604
-				moveMouseCursorPosition( $crypt_middle_mouse_lower_xy[0]  + $dx, $crypt_middle_mouse_lower_xy[1]      + $dy );
-				usleep($wait_move_xy);
-				sendMouseLeftClick(0,0);
-				usleep($wait_click);
-
-				usleep($wait_screen);
-
-				print "Validate Crypt Gray Title #2\n";
-
-				my $crypt_gray_title_pos_ref2 = validate_is_crypt_gray_title();
-				print Dumper $crypt_gray_title_pos_ref2;
-				if (!defined($crypt_gray_title_pos_ref2))
-				{
-					return 23;
-				}
-				else
-				{
-					print "Crypt was shifted below\n";
-				}
-			}
-			else
-			{
-				print "Could not find the lower crypt, try again\n";
-				return 22;
-			}
+			@half_left_crypt_first_mouse_xy = @half_left_crypt_menu_third_mouse_xy;
+		}
+		elsif ($i == 3)
+		{
+			@half_left_crypt_first_mouse_xy = @half_left_crypt_menu_fourth_mouse_xy;
 		}
 		else
 		{
-			print "Could not find the crypt, try again\n";
-			return 20;
+			@half_left_crypt_first_mouse_xy = @half_left_crypt_menu_first_mouse_xy;
 		}
 	}
 
-	#usleep($wait_screen); # 500 ms
+	# Update global state variables
+	@telescope_mouse_xy               = @half_left_telescope_mouse_xy;
+	@crypt_menu_mouse_xy              = @half_left_crypt_menu_mouse_xy;
+	@crypt_first_mouse_xy             = @half_left_crypt_first_mouse_xy;
+	@crypt_middle_mouse_xy            = @half_left_crypt_middle_mouse_xy;
+	@crypt_middle_mouse_lower_xy      = @half_left_crypt_middle_mouse_lower_xy;
+	@crypt_explore_right_mouse_xy     = @half_left_crypt_explore_right_mouse_xy;
+	@crypt_misclick_top_menu_mouse_xy = @half_left_crypt_misclick_top_menu_mouse_xy;
+	@crypt_speedup_top_menu_mouse_xy  = @half_left_crypt_speedup_top_menu_mouse_xy;
 
-	moveMouseCursorPosition( $crypt_explore_right_mouse_xy[0]  + $dx, $crypt_explore_right_mouse_xy[1] + $dy );
-	usleep($wait_move_xy);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
+	@crypt_speedup_first_mouse_xy     = @half_left_crypt_speedup_first_mouse_xy;
+	@crypt_speedup_second_mouse_xy    = @half_left_crypt_speedup_second_mouse_xy;
+	@crypt_speedup_third_mouse_xy     = @half_left_crypt_speedup_third_mouse_xy;
 
-	usleep($wait_screen);
+	@crypt_speedup_close_mouse_xy     = @half_left_crypt_speedup_close_mouse_xy;
 
-	moveMouseCursorPosition( $crypt_speedup_top_menu_mouse_xy[0] + $dx, $crypt_speedup_top_menu_mouse_xy[1] + $dy );
-	usleep($wait_move_xy);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
-
-	usleep($wait_screen);
-
-	#usleep($wait_screen);
-
-	moveMouseCursorPosition( $crypt_speedup_mouse_xy[0]          + $dx, $crypt_speedup_mouse_xy[1]       + $dy );
-	usleep($wait_move_xy);
-
-	#usleep($wait_screen);
-
-	my $crypt_green_title_pos_ref = validate_is_crypt_green_speedup_title();
-
-	if (!defined($crypt_green_title_pos_ref))
-	{
-		print "Could not find the speed up title, try again\n";
-		return 3;
-	}
-
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
-
-	# 5 speed up clicks
-	usleep($wait_click);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
-	usleep($wait_click);
-
-	usleep($wait_screen);
-
-	Win32::Sound::Play("SystemStart");
-
-	usleep($wait_screen);
-
-	moveMouseCursorPosition( $crypt_speedup_close_mouse_xy[0]  + $dx, $crypt_speedup_close_mouse_xy[1] + $dy );
-	usleep($wait_move_xy);
-	sendMouseLeftClick(0,0);
-	usleep($wait_click);
-	usleep($wait_screen);
-
-	Win32::Sound::Play("SystemStart");
-	usleep($wait_crypt);
-	Win32::Sound::Play("SystemStart");
-
-	return 0;
+	return run_state_machine($i, $skip);
 }
 
-#################################################################
+#############################################################################
 
 sub full_screen_state_machine(;$;$)
 {
@@ -579,20 +497,109 @@ sub full_screen_state_machine(;$;$)
 		}
 	}
 
-	my @telescope_mouse_xy               = @full_telescope_mouse_xy;
-	my @crypt_menu_mouse_xy              = @full_crypt_menu_mouse_xy;
-	my @crypt_first_mouse_xy             = @full_crypt_first_mouse_xy;
-	my @crypt_middle_mouse_xy            = @full_crypt_middle_mouse_xy;
-	my @crypt_middle_mouse_lower_xy      = @full_crypt_middle_mouse_lower_xy;
-	my @crypt_explore_right_mouse_xy     = @full_crypt_explore_right_mouse_xy;
-	my @crypt_misclick_top_menu_mouse_xy = @full_crypt_misclick_top_menu_mouse_xy;
-	my @crypt_speedup_top_menu_mouse_xy  = @full_crypt_speedup_top_menu_mouse_xy;
+	@telescope_mouse_xy               = @full_telescope_mouse_xy;
+	@crypt_menu_mouse_xy              = @full_crypt_menu_mouse_xy;
+	@crypt_first_mouse_xy             = @full_crypt_first_mouse_xy;
+	@crypt_middle_mouse_xy            = @full_crypt_middle_mouse_xy;
+	@crypt_middle_mouse_lower_xy      = @full_crypt_middle_mouse_lower_xy;
+	@crypt_explore_right_mouse_xy     = @full_crypt_explore_right_mouse_xy;
+	@crypt_misclick_top_menu_mouse_xy = @full_crypt_misclick_top_menu_mouse_xy;
+	@crypt_speedup_top_menu_mouse_xy  = @full_crypt_speedup_top_menu_mouse_xy;
 
-	my @crypt_speedup_first_mouse_xy     = @full_crypt_speedup_first_mouse_xy;
-	my @crypt_speedup_second_mouse_xy    = @full_crypt_speedup_second_mouse_xy;
-	my @crypt_speedup_third_mouse_xy     = @full_crypt_speedup_third_mouse_xy;
+	@crypt_speedup_first_mouse_xy     = @full_crypt_speedup_first_mouse_xy;
+	@crypt_speedup_second_mouse_xy    = @full_crypt_speedup_second_mouse_xy;
+	@crypt_speedup_third_mouse_xy     = @full_crypt_speedup_third_mouse_xy;
 
-	my @crypt_speedup_close_mouse_xy     = @full_crypt_speedup_close_mouse_xy;
+	@crypt_speedup_close_mouse_xy     = @full_crypt_speedup_close_mouse_xy;
+
+	return run_state_machine($i, $skip);
+}
+
+#############################################################################
+
+sub desktop_screen_state_machine(;$;$)
+{
+	my $i = $_[0];
+	if (!defined($i))
+	{
+		$i = -1;
+	}
+	else
+	{
+		$i = int($i) % 4;
+	}
+
+	my $skip = $_[1];
+	if (!defined($skip))
+	{
+		$skip = 0;
+	}
+	else
+	{
+		$skip = 0 + int($skip);
+	}
+
+	if ($i >= 0)
+	{
+		if ($i == 1)
+		{
+			@desktop_crypt_first_mouse_xy = @desktop_crypt_menu_second_mouse_xy;
+		}
+		elsif ($i == 2)
+		{
+			@desktop_crypt_first_mouse_xy = @desktop_crypt_menu_third_mouse_xy;
+		}
+		elsif ($i == 3)
+		{
+			@desktop_crypt_first_mouse_xy = @desktop_crypt_menu_fourth_mouse_xy;
+		}
+		else
+		{
+			@desktop_crypt_first_mouse_xy = @desktop_crypt_menu_first_mouse_xy;
+		}
+	}
+
+	my @telescope_mouse_xy               = @desktop_telescope_mouse_xy;
+	my @crypt_menu_mouse_xy              = @desktop_crypt_menu_mouse_xy;
+	my @crypt_first_mouse_xy             = @desktop_crypt_first_mouse_xy;
+	my @crypt_middle_mouse_xy            = @desktop_crypt_middle_mouse_xy;
+	my @crypt_middle_mouse_lower_xy      = @desktop_crypt_middle_mouse_lower_xy;
+	my @crypt_explore_right_mouse_xy     = @desktop_crypt_explore_right_mouse_xy;
+	my @crypt_misclick_top_menu_mouse_xy = @desktop_crypt_misclick_top_menu_mouse_xy;
+	my @crypt_speedup_top_menu_mouse_xy  = @desktop_crypt_speedup_top_menu_mouse_xy;
+
+	my @crypt_speedup_first_mouse_xy     = @desktop_crypt_speedup_first_mouse_xy;
+	my @crypt_speedup_second_mouse_xy    = @desktop_crypt_speedup_second_mouse_xy;
+	my @crypt_speedup_third_mouse_xy     = @desktop_crypt_speedup_third_mouse_xy;
+
+	my @crypt_speedup_close_mouse_xy     = @desktop_crypt_speedup_close_mouse_xy;
+
+	return run_state_machine($i, $skip);
+}
+
+#############################################################################
+
+sub run_state_machine(;$;$)
+{
+	my $i = $_[0];
+	if (!defined($i))
+	{
+		$i = -1;
+	}
+	else
+	{
+		$i = int($i) % 4;
+	}
+
+	my $skip = $_[1];
+	if (!defined($skip))
+	{
+		$skip = 0;
+	}
+	else
+	{
+		$skip = 0 + int($skip);
+	}
 
 	# RANDOM offset of [-x, x]
 	my $dx = int(rand($mouse_delta_x_swing * 2)) - int($mouse_delta_x_swing);
@@ -810,7 +817,7 @@ sub full_screen_state_machine(;$;$)
 	return 0;
 }
 
-#################################################################
+#############################################################################
 
 sub main()
 {
@@ -826,7 +833,6 @@ sub main()
 	print "Sleep 5 seconds... GO!\n\n";
 	Win32::Sound::Play("SystemStart");
 	sleep(5);
-
 
 	Win32::Sound::Play("SystemStart");
 

@@ -415,7 +415,7 @@ sub half_left_state_machine()
 		}
 		elsif (0)
 		{
-			print "Misclick green title window was found at [" . $crypt_gray_title_pos_ref[0] .",". $crypt_gray_title_pos_ref[1] . "]\n";
+			print "Misclick green title window was found at [" . $crypt_misclick_green_title_pos_ref[0] .",". $crypt_misclick_green_title_pos_ref[1] . "]\n";
 
 			# Cursor is at: 994, 348
 			moveMouseCursorPosition( $crypt_misclick_top_menu_mouse_xy[0] + $dx, $crypt_misclick_top_menu_mouse_xy[1] + $dy );
@@ -458,7 +458,7 @@ sub half_left_state_machine()
 		else
 		{
 			print "Could not find the crypt, try again\n";
-			return 2;
+			return 20;
 		}
 	}
 
@@ -665,22 +665,26 @@ sub full_screen_state_machine(;$;$)
 				usleep($wait_click);
 
 				usleep($wait_screen);
+			}
 		}
 	}
 
 	my $crypt_gray_title_pos_ref = validate_is_crypt_gray_title();
+	print Dumper $crypt_gray_title_pos_ref;
 
 	if (!defined($crypt_gray_title_pos_ref))
 	{
 		my $crypt_misclick_green_title_pos_ref = validate_is_crypt_green_misclick_title();
-		if (!defined($crypt_gray_title_pos_ref))
+		print Dumper $crypt_misclick_green_title_pos_ref;
+
+		if (!defined($crypt_misclick_green_title_pos_ref))
 		{
 			print "Could not find the crypt, nor misclick green title, try again\n";
 			return 21;
 		}
 		elsif (0)
 		{
-			print "Misclick green title window was found at [" . $crypt_gray_title_pos_ref[0] .",". $crypt_gray_title_pos_ref[1] . "]\n";
+			print "Misclick green title window was found at [" . $crypt_misclick_green_title_pos_ref[0] .",". $crypt_misclick_green_title_pos_ref[1] . "]\n";
 
 			# Cursor is at: 994, 348
 			moveMouseCursorPosition( $crypt_misclick_top_menu_mouse_xy[0] + $dx, $crypt_misclick_top_menu_mouse_xy[1] + $dy );
@@ -723,7 +727,7 @@ sub full_screen_state_machine(;$;$)
 		else
 		{
 			print "Could not find the crypt, try again\n";
-			return 2;
+			return 20;
 		}
 	}
 
@@ -799,7 +803,7 @@ sub full_screen_state_machine(;$;$)
 sub main()
 {
 	# Send many crypt mining sequences
-	my $max   = 2800;
+	my $max   = 7800;
 	my $r2    = 0;
 	my $retry = 0;
 	my $good  = 0;

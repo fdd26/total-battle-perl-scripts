@@ -162,7 +162,10 @@ my @full_crypt_first_mouse_xy                 = @full_crypt_menu_third_mouse_xy;
 #my @full_crypt_first_mouse_xy                = qw( 975 445 );
 
 my @full_crypt_middle_mouse_xy                = qw( 773 488 );
+my @full_crypt_middle_mouse_lower_xy          = qw( 970 604 );
+
 my @full_crypt_explore_right_mouse_xy         = qw( 916 686 );
+my @full_crypt_misclick_top_menu_mouse_xy     = qw( 995 348 );
 my @full_crypt_speedup_top_menu_mouse_xy      = qw( 995 200 );
 
 my @full_crypt_speedup_first_mouse_xy         = qw( 899 430 );
@@ -214,6 +217,34 @@ sub validate_is_crypt_gray_title()
 	if ($output =~ m/[\#]+BAD/mi)
 	{
 		print "is_crypt_gray_title: BAD was found\n";
+		return undef;
+	}
+
+	print Dumper \@lines;
+	if ($output =~ m/[\(]+([1-9][0-9]*)[, ]+([1-9][0-9]*)[\)]+/mi)
+	{
+		my $x   = 0 + int($1);
+		my $y   = 0 + int($2);
+		my @pos = ($x, $y);
+		print Dumper \@pos;
+		return \@pos;
+	}
+
+	return undef;
+}
+
+#################################################################
+
+sub validate_is_crypt_green_misclick_title()
+{
+	my $python3 = $PYTHON3_PATH_EXE;
+	my $script  = q{Is-Crypt-Green-Misclick-Title.py};
+	my @lines   = qx($python3 $script);
+	my $output  = join('\n', @lines);
+
+	if ($output =~ m/[\#]+BAD/mi)
+	{
+		print "is_crypt_green_misclick_title: BAD was found\n";
 		return undef;
 	}
 
@@ -294,8 +325,10 @@ sub half_left_state_machine()
 	my @crypt_menu_mouse_xy              = @half_left_crypt_menu_mouse_xy;
 	my @crypt_first_mouse_xy             = @half_left_crypt_first_mouse_xy;
 	my @crypt_middle_mouse_xy            = @half_left_crypt_middle_mouse_xy;
+	my @crypt_middle_mouse_lower_xy      = @full_crypt_middle_mouse_lower_xy;
 	my @crypt_explore_right_mouse_xy     = @half_left_crypt_explore_right_mouse_xy;
 
+	my @crypt_misclick_top_menu_mouse_xy = @full_crypt_misclick_top_menu_mouse_xy;
 	my @crypt_speedup_top_menu_mouse_xy  = @half_left_crypt_speedup_top_menu_mouse_xy;
 
 	my @crypt_speedup_first_mouse_xy     = @half_left_crypt_speedup_first_mouse_xy;
@@ -361,8 +394,59 @@ sub half_left_state_machine()
 
 	if (!defined($crypt_gray_title_pos_ref))
 	{
-		print "Could not find the crypt, try again\n";
-		return 2;
+		my $crypt_misclick_green_title_pos_ref = validate_is_crypt_green_misclick_title();
+		if (!defined($crypt_gray_title_pos_ref))
+		{
+			print "Could not find the crypt, nor misclick green title, try again\n";
+			return 21;
+		}
+		elsif (0)
+		{
+			print "Misclick green title window was found at [" . $crypt_gray_title_pos_ref[0] .",". $crypt_gray_title_pos_ref[1] . "]\n";
+
+			# Cursor is at: 994, 348
+			SetCursorPos( $crypt_misclick_top_menu_mouse_xy[0] + $dx, $crypt_misclick_top_menu_mouse_xy[1] + $dy );
+			usleep($wait_move_xy);
+			sendMouseLeftClick(0,0);
+			usleep($wait_click);
+
+			usleep($wait_screen);
+
+			my $crypt_misclick_green_title_pos_ref2 = validate_is_crypt_green_misclick_title();
+			if (!defined($crypt_misclick_green_title_pos_ref2))
+			{
+				print "Misclick window was closed\n";
+
+				#my @full_crypt_middle_mouse_xy                = qw( 773 488 );
+				# 970, 604
+				SetCursorPos( $crypt_middle_mouse_lower_xy[0]  + $dx, $crypt_middle_mouse_lower_xy[1]      + $dy );
+				usleep($wait_move_xy);
+				sendMouseLeftClick(0,0);
+				usleep($wait_click);
+
+				usleep($wait_screen);
+
+				my $crypt_gray_title_pos_ref2 = validate_is_crypt_gray_title();
+				if (!defined($crypt_gray_title_pos_ref2))
+				{
+					return 23;
+				}
+				else
+				{
+					print "Crypt was shifted below\n";
+				}
+			}
+			else
+			{
+				print "Could not find the lower crypt, try again\n";
+				return 22;
+			}
+		}
+		else
+		{
+			print "Could not find the crypt, try again\n";
+			return 2;
+		}
 	}
 
 	#usleep($wait_screen); # 500 ms
@@ -476,18 +560,20 @@ sub full_screen_state_machine(;$;$)
 		}
 	}
 
-	my @telescope_mouse_xy              = @full_telescope_mouse_xy;
-	my @crypt_menu_mouse_xy             = @full_crypt_menu_mouse_xy;
-	my @crypt_first_mouse_xy            = @full_crypt_first_mouse_xy;
-	my @crypt_middle_mouse_xy           = @full_crypt_middle_mouse_xy;
-	my @crypt_explore_right_mouse_xy    = @full_crypt_explore_right_mouse_xy;
-	my @crypt_speedup_top_menu_mouse_xy = @full_crypt_speedup_top_menu_mouse_xy;
+	my @telescope_mouse_xy               = @full_telescope_mouse_xy;
+	my @crypt_menu_mouse_xy              = @full_crypt_menu_mouse_xy;
+	my @crypt_first_mouse_xy             = @full_crypt_first_mouse_xy;
+	my @crypt_middle_mouse_xy            = @full_crypt_middle_mouse_xy;
+	my @crypt_middle_mouse_lower_xy      = @full_crypt_middle_mouse_lower_xy;
+	my @crypt_explore_right_mouse_xy     = @full_crypt_explore_right_mouse_xy;
+	my @crypt_misclick_top_menu_mouse_xy = @full_crypt_misclick_top_menu_mouse_xy;
+	my @crypt_speedup_top_menu_mouse_xy  = @full_crypt_speedup_top_menu_mouse_xy;
 
-	my @crypt_speedup_first_mouse_xy    = @full_crypt_speedup_first_mouse_xy;
-	my @crypt_speedup_second_mouse_xy   = @full_crypt_speedup_second_mouse_xy;
-	my @crypt_speedup_third_mouse_xy    = @full_crypt_speedup_third_mouse_xy;
+	my @crypt_speedup_first_mouse_xy     = @full_crypt_speedup_first_mouse_xy;
+	my @crypt_speedup_second_mouse_xy    = @full_crypt_speedup_second_mouse_xy;
+	my @crypt_speedup_third_mouse_xy     = @full_crypt_speedup_third_mouse_xy;
 
-	my @crypt_speedup_close_mouse_xy    = @full_crypt_speedup_close_mouse_xy;
+	my @crypt_speedup_close_mouse_xy     = @full_crypt_speedup_close_mouse_xy;
 
 	# RANDOM offset of [-x, x]
 	my $dx = int(rand($mouse_delta_x_swing * 2)) - int($mouse_delta_x_swing);
@@ -571,8 +657,59 @@ sub full_screen_state_machine(;$;$)
 
 	if (!defined($crypt_gray_title_pos_ref))
 	{
-		print "Could not find the crypt, try again\n";
-		return 2;
+		my $crypt_misclick_green_title_pos_ref = validate_is_crypt_green_misclick_title();
+		if (!defined($crypt_gray_title_pos_ref))
+		{
+			print "Could not find the crypt, nor misclick green title, try again\n";
+			return 21;
+		}
+		elsif (0)
+		{
+			print "Misclick green title window was found at [" . $crypt_gray_title_pos_ref[0] .",". $crypt_gray_title_pos_ref[1] . "]\n";
+
+			# Cursor is at: 994, 348
+			SetCursorPos( $crypt_misclick_top_menu_mouse_xy[0] + $dx, $crypt_misclick_top_menu_mouse_xy[1] + $dy );
+			usleep($wait_move_xy);
+			sendMouseLeftClick(0,0);
+			usleep($wait_click);
+
+			usleep($wait_screen);
+
+			my $crypt_misclick_green_title_pos_ref2 = validate_is_crypt_green_misclick_title();
+			if (!defined($crypt_misclick_green_title_pos_ref2))
+			{
+				print "Misclick window was closed\n";
+
+				#my @full_crypt_middle_mouse_xy                = qw( 773 488 );
+				# 970, 604
+				SetCursorPos( $crypt_middle_mouse_lower_xy[0]  + $dx, $crypt_middle_mouse_lower_xy[1]      + $dy );
+				usleep($wait_move_xy);
+				sendMouseLeftClick(0,0);
+				usleep($wait_click);
+
+				usleep($wait_screen);
+
+				my $crypt_gray_title_pos_ref2 = validate_is_crypt_gray_title();
+				if (!defined($crypt_gray_title_pos_ref2))
+				{
+					return 23;
+				}
+				else
+				{
+					print "Crypt was shifted below\n";
+				}
+			}
+			else
+			{
+				print "Could not find the lower crypt, try again\n";
+				return 22;
+			}
+		}
+		else
+		{
+			print "Could not find the crypt, try again\n";
+			return 2;
+		}
 	}
 
 	#usleep($wait_screen); # 500 ms

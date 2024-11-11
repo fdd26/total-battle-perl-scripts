@@ -198,30 +198,30 @@ my @full_crypt_speedup_close_mouse_xy          = qw( 984 284 );
 # DESKTOP SCREEN 100% CHROME / 25% GAME ZOOM + Chrome Bookmark bar (1680x1050)
 #########################################################################################
 
-my @desktop_telescope_mouse_xy                 = qw( 564 727 );
-my @desktop_crypt_menu_mouse_xy                = qw( 542 435 );
+my @desktop_telescope_mouse_xy                 = qw( 570 905 );
+my @desktop_crypt_menu_mouse_xy                = qw( 575 520 );
 
-my @desktop_crypt_menu_first_mouse_xy          = qw( 975 445 );
-my @desktop_crypt_menu_second_mouse_xy         = qw( 975 525 );
-my @desktop_crypt_menu_third_mouse_xy          = qw( 975 605 );
-my @desktop_crypt_menu_fourth_mouse_xy         = qw( 975 685 );
+my @desktop_crypt_menu_first_mouse_xy          = qw( 1100 530 );
+my @desktop_crypt_menu_second_mouse_xy         = qw( 1100 632 );
+my @desktop_crypt_menu_third_mouse_xy          = qw( 1100 730 );
+my @desktop_crypt_menu_fourth_mouse_xy         = qw( 1100 830 );
 
 my @desktop_crypt_first_mouse_xy               = @desktop_crypt_menu_third_mouse_xy;
 
-#my @desktop_crypt_first_mouse_xy              = qw( 975 445 );
+#my @desktop_crypt_first_mouse_xy              = qw( 1100 530 );
 
-my @desktop_crypt_middle_mouse_xy              = qw( 773 488 );
-my @desktop_crypt_middle_mouse_lower_xy        = qw( 970 604 );
+my @desktop_crypt_middle_mouse_xy              = qw( 840 587 );
+my @desktop_crypt_middle_mouse_lower_xy        = qw( 890 613 );
 
-my @desktop_crypt_explore_right_mouse_xy       = qw( 916 686 );
-my @desktop_crypt_misclick_top_menu_mouse_xy   = qw( 995 348 );
-my @desktop_crypt_speedup_top_menu_mouse_xy    = qw( 995 200 );
+my @desktop_crypt_explore_right_mouse_xy       = qw( 1020 830 );
+my @desktop_crypt_misclick_top_menu_mouse_xy   = qw( 1122 410 );
+my @desktop_crypt_speedup_top_menu_mouse_xy    = qw( 1120 212 );
 
-my @desktop_crypt_speedup_first_mouse_xy       = qw( 899 430 );
-my @desktop_crypt_speedup_second_mouse_xy      = qw( 899 517 );
-my @desktop_crypt_speedup_third_mouse_xy       = qw( 899 606 );
+my @desktop_crypt_speedup_first_mouse_xy       = qw( 1010 510 );
+my @desktop_crypt_speedup_second_mouse_xy      = qw( 1010 624 );
+my @desktop_crypt_speedup_third_mouse_xy       = qw( 1010 624 );#
 
-my @desktop_crypt_speedup_close_mouse_xy       = qw( 984 284 );
+my @desktop_crypt_speedup_close_mouse_xy       = qw( 1106 335 );
 
 #########################################################################################
 # Default EMPTY global state machine variables
@@ -394,14 +394,14 @@ sub find_crypt_position()
 
 sub half_left_state_machine()
 {
-	my $i = $_[0];
-	if (!defined($i))
+	my $choice = $_[0];
+	if (!defined($choice))
 	{
-		$i = -1;
+		$choice = -1;
 	}
 	else
 	{
-		$i = int($i) % 4;
+		$choice = int($choice) % 4;
 	}
 
 	my $skip = $_[1];
@@ -414,17 +414,17 @@ sub half_left_state_machine()
 		$skip = 0 + int($skip);
 	}
 
-	if ($i >= 0)
+	if ($choice >= 0)
 	{
-		if ($i == 1)
+		if ($choice == 1)
 		{
 			@half_left_crypt_first_mouse_xy = @half_left_crypt_menu_second_mouse_xy;
 		}
-		elsif ($i == 2)
+		elsif ($choice == 2)
 		{
 			@half_left_crypt_first_mouse_xy = @half_left_crypt_menu_third_mouse_xy;
 		}
-		elsif ($i == 3)
+		elsif ($choice == 3)
 		{
 			@half_left_crypt_first_mouse_xy = @half_left_crypt_menu_fourth_mouse_xy;
 		}
@@ -450,21 +450,21 @@ sub half_left_state_machine()
 
 	@crypt_speedup_close_mouse_xy     = @half_left_crypt_speedup_close_mouse_xy;
 
-	return run_state_machine($i, $skip);
+	return run_state_machine($choice, $skip);
 }
 
 #########################################################################################
 
 sub full_screen_state_machine(;$;$)
 {
-	my $i = $_[0];
-	if (!defined($i))
+	my $choice = $_[0];
+	if (!defined($choice))
 	{
-		$i = -1;
+		$choice = -1;
 	}
 	else
 	{
-		$i = int($i) % 4;
+		$choice = int($choice) % 4;
 	}
 
 	my $skip = $_[1];
@@ -477,17 +477,17 @@ sub full_screen_state_machine(;$;$)
 		$skip = 0 + int($skip);
 	}
 
-	if ($i >= 0)
+	if ($choice >= 0)
 	{
-		if ($i == 1)
+		if ($choice == 1)
 		{
 			@full_crypt_first_mouse_xy = @full_crypt_menu_second_mouse_xy;
 		}
-		elsif ($i == 2)
+		elsif ($choice == 2)
 		{
 			@full_crypt_first_mouse_xy = @full_crypt_menu_third_mouse_xy;
 		}
-		elsif ($i == 3)
+		elsif ($choice == 3)
 		{
 			@full_crypt_first_mouse_xy = @full_crypt_menu_fourth_mouse_xy;
 		}
@@ -512,21 +512,21 @@ sub full_screen_state_machine(;$;$)
 
 	@crypt_speedup_close_mouse_xy     = @full_crypt_speedup_close_mouse_xy;
 
-	return run_state_machine($i, $skip);
+	return run_state_machine($choice, $skip);
 }
 
 #########################################################################################
 
 sub desktop_screen_state_machine(;$;$)
 {
-	my $i = $_[0];
-	if (!defined($i))
+	my $choice = $_[0];
+	if (!defined($choice))
 	{
-		$i = -1;
+		$choice = -1;
 	}
 	else
 	{
-		$i = int($i) % 4;
+		$choice = int($choice) % 4;
 	}
 
 	my $skip = $_[1];
@@ -539,17 +539,17 @@ sub desktop_screen_state_machine(;$;$)
 		$skip = 0 + int($skip);
 	}
 
-	if ($i >= 0)
+	if ($choice >= 0)
 	{
-		if ($i == 1)
+		if ($choice == 1)
 		{
 			@desktop_crypt_first_mouse_xy = @desktop_crypt_menu_second_mouse_xy;
 		}
-		elsif ($i == 2)
+		elsif ($choice == 2)
 		{
 			@desktop_crypt_first_mouse_xy = @desktop_crypt_menu_third_mouse_xy;
 		}
-		elsif ($i == 3)
+		elsif ($choice == 3)
 		{
 			@desktop_crypt_first_mouse_xy = @desktop_crypt_menu_fourth_mouse_xy;
 		}
@@ -559,36 +559,36 @@ sub desktop_screen_state_machine(;$;$)
 		}
 	}
 
-	my @telescope_mouse_xy               = @desktop_telescope_mouse_xy;
-	my @crypt_menu_mouse_xy              = @desktop_crypt_menu_mouse_xy;
-	my @crypt_first_mouse_xy             = @desktop_crypt_first_mouse_xy;
-	my @crypt_middle_mouse_xy            = @desktop_crypt_middle_mouse_xy;
-	my @crypt_middle_mouse_lower_xy      = @desktop_crypt_middle_mouse_lower_xy;
-	my @crypt_explore_right_mouse_xy     = @desktop_crypt_explore_right_mouse_xy;
-	my @crypt_misclick_top_menu_mouse_xy = @desktop_crypt_misclick_top_menu_mouse_xy;
-	my @crypt_speedup_top_menu_mouse_xy  = @desktop_crypt_speedup_top_menu_mouse_xy;
+	@telescope_mouse_xy               = @desktop_telescope_mouse_xy;
+	@crypt_menu_mouse_xy              = @desktop_crypt_menu_mouse_xy;
+	@crypt_first_mouse_xy             = @desktop_crypt_first_mouse_xy;
+	@crypt_middle_mouse_xy            = @desktop_crypt_middle_mouse_xy;
+	@crypt_middle_mouse_lower_xy      = @desktop_crypt_middle_mouse_lower_xy;
+	@crypt_explore_right_mouse_xy     = @desktop_crypt_explore_right_mouse_xy;
+	@crypt_misclick_top_menu_mouse_xy = @desktop_crypt_misclick_top_menu_mouse_xy;
+	@crypt_speedup_top_menu_mouse_xy  = @desktop_crypt_speedup_top_menu_mouse_xy;
 
-	my @crypt_speedup_first_mouse_xy     = @desktop_crypt_speedup_first_mouse_xy;
-	my @crypt_speedup_second_mouse_xy    = @desktop_crypt_speedup_second_mouse_xy;
-	my @crypt_speedup_third_mouse_xy     = @desktop_crypt_speedup_third_mouse_xy;
+	@crypt_speedup_first_mouse_xy     = @desktop_crypt_speedup_first_mouse_xy;
+	@crypt_speedup_second_mouse_xy    = @desktop_crypt_speedup_second_mouse_xy;
+	@crypt_speedup_third_mouse_xy     = @desktop_crypt_speedup_third_mouse_xy;
 
-	my @crypt_speedup_close_mouse_xy     = @desktop_crypt_speedup_close_mouse_xy;
+	@crypt_speedup_close_mouse_xy     = @desktop_crypt_speedup_close_mouse_xy;
 
-	return run_state_machine($i, $skip);
+	return run_state_machine($choice, $skip);
 }
 
 #########################################################################################
 
 sub run_state_machine(;$;$)
 {
-	my $i = $_[0];
-	if (!defined($i))
+	my $choice = $_[0];
+	if (!defined($choice))
 	{
-		$i = -1;
+		$choice = -1;
 	}
 	else
 	{
-		$i = int($i) % 4;
+		$choice = int($choice) % 4;
 	}
 
 	my $skip = $_[1];
@@ -821,8 +821,12 @@ sub run_state_machine(;$;$)
 
 sub main()
 {
+	#my $screen_type = "HALF SCREEN";
+	#my $screen_type = "FULL SCREEN";
+	my $screen_type = "DESKTOP";
+
 	# Send many crypt mining sequences
-	my $max   = 7800;
+	my $max   = 2;
 	my $r2    = 0;
 	my $retry = 0;
 	my $good  = 0;
@@ -854,7 +858,23 @@ sub main()
 			print "Skip wait...\n";
 		}
 
-		$r2 = full_screen_state_machine($i % 4);
+		my $choice = ($i % 4);
+		if ($screen_type =~ m/^\s*[H]+/i)
+		{
+			$r2 = half_left_screen_state_machine($choice);
+		}
+		elsif ($screen_type =~ m/^\s*[F]+/i)
+		{
+			$r2 = full_screen_state_machine($choice);
+		}
+		elsif ($screen_type =~ m/^\s*[D]+/i)
+		{
+			$r2 = desktop_screen_state_machine($choice);
+		}
+		else
+		{
+			$r2 = full_screen_state_machine($choice);
+		}
 
 		if ($r2 == 1)
 		{

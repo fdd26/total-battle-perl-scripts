@@ -90,9 +90,28 @@ Win32::API->Import('user32' => 'BOOL GetCursorPos(LPPOINT pt)');
 Win32::API->Import('user32' => 'BOOL SetCursorPos(int x, int y)');
 Win32::API->Import('user32' => 'void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo)');
 
-sub playSoundSystemStart()
+my $NO_SOUND          = 1;
+my $PERL_WITH_SOUND   = 1;
+my $PYTHON_WITH_SOUND = 1;
+
+if ($NO_SOUND)
 {
-	#Win32::Sound::Play("SystemStart");
+	$PERL_WITH_SOUND   = 0;
+	$PYTHON_WITH_SOUN  = 0;
+}
+
+sub playSoundSystemStart(;$)
+{
+	if ($PERL_WITH_SOUND)
+	{
+		my $state = defined($_[0]) ? int($_[0]) : -1;
+		if ($state >= 0)
+		{
+			print "Play State [$state]\n";
+		}
+
+		Win32::Sound::Play("SystemStart");
+	}
 }
 
 sub moveMouseCursorPosition($$)
@@ -192,7 +211,7 @@ sub validate_is_crypt_left_menu()
 {
 	my $python3 = $PYTHON3_PATH_EXE;
 	my $script  = q{Is-Crypt-Left-Menu.py};
-	my @lines   = qx($python3 $script);
+	my @lines   = qx($python3 $script $PYTHON_WITH_SOUND);
 	my $output  = join('\n', @lines);
 
 	if ($output =~ m/[\#]+BAD/mi)
@@ -224,7 +243,7 @@ sub validate_is_crypt_gray_title()
 {
 	my $python3 = $PYTHON3_PATH_EXE;
 	my $script  = q{Is-Crypt-Gray-Title.py};
-	my @lines   = qx($python3 $script);
+	my @lines   = qx($python3 $script $PYTHON_WITH_SOUND);
 	my $output  = join('\n', @lines);
 
 	if ($output =~ m/[\#]+BAD/mi)
@@ -253,7 +272,7 @@ sub validate_is_crypt_green_misclick_title()
 {
 	my $python3 = $PYTHON3_PATH_EXE;
 	my $script  = q{Is-Crypt-Green-Misclick-Title.py};
-	my @lines   = qx($python3 $script);
+	my @lines   = qx($python3 $script $PYTHON_WITH_SOUND);
 	my $output  = join('\n', @lines);
 
 	if ($output =~ m/[\#]+BAD/mi)
@@ -282,7 +301,7 @@ sub validate_is_crypt_green_speedup_title()
 {
 	my $python3 = $PYTHON3_PATH_EXE;
 	my $script  = q{Is-Crypt-Green-Speedup-Title.py};
-	my @lines   = qx($python3 $script);
+	my @lines   = qx($python3 $script $PYTHON_WITH_SOUND);
 	my $output  = join('\n', @lines);
 
 	if ($output =~ m/[\#]+BAD/mi)
@@ -311,7 +330,7 @@ sub find_crypt_position()
 {
 	my $python3 = $PYTHON3_PATH_EXE;
 	my $script  = q{crypt-search.py};
-	my @lines   = qx($python3 $script);
+	my @lines   = qx($python3 $script $PYTHON_WITH_SOUND);
 	my $output  = join('\n', @lines);
 
 	if ($output =~ m/[\#]+BAD/mi)
@@ -522,7 +541,7 @@ sub half_left_state_machine()
 
 	usleep($wait_screen);
 
-	playSoundSystemStart();
+	playSoundSystemStart(5);
 
 	usleep($wait_screen);
 
@@ -532,9 +551,9 @@ sub half_left_state_machine()
 	usleep($wait_click);
 	usleep($wait_screen);
 
-	playSoundSystemStart();
+	playSoundSystemStart(6);
 	usleep($wait_crypt);
-	playSoundSystemStart();
+	playSoundSystemStart(7);
 
 	return 0;
 }
@@ -797,7 +816,7 @@ sub full_screen_state_machine(;$;$)
 
 	usleep($wait_screen);
 
-	playSoundSystemStart();
+	playSoundSystemStart(8);
 
 	usleep($wait_screen);
 
@@ -807,9 +826,9 @@ sub full_screen_state_machine(;$;$)
 	usleep($wait_click);
 	usleep($wait_screen);
 
-	playSoundSystemStart();
+	playSoundSystemStart(9);
 	usleep($wait_crypt);
-	playSoundSystemStart();
+	playSoundSystemStart(10);
 
 	return 0;
 }
@@ -828,11 +847,11 @@ sub main()
 	my $pt = getMouseXYCoordinates();
 
 	print "Sleep 5 seconds... GO!\n\n";
-	playSoundSystemStart();
+	playSoundSystemStart(1);
 	sleep(5);
 
 
-	playSoundSystemStart();
+	playSoundSystemStart(2);
 
 	for(my $i = 1; $i <= $max; ++$i)
 	{
@@ -882,10 +901,10 @@ sub main()
 			exit(1);
 		}
 
-		playSoundSystemStart();
+		playSoundSystemStart(3);
 	}
 
-	playSoundSystemStart();
+	playSoundSystemStart(4);
 }
 
 main();

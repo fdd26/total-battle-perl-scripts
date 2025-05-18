@@ -43,6 +43,7 @@
 
 import winsound
 import pyautogui as pag
+import sys
 import time
 from python_imagesearch.imagesearch import imagesearch
 
@@ -60,7 +61,9 @@ while i < 1800:
     # 25% resolution square image search
     pos = imagesearch("crypt-march-carter-menu.png")
     if pos[0] != -1:
-        #winsound.Beep(freqMerc, dur)
+        if len(sys.argv) > 1 and sys.argv[1] == '1':
+            winsound.Beep(freqMerc, dur)
+
         print( str( pos ) )
         # Sleep a little before looping
         time.sleep(0.5)

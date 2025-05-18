@@ -43,6 +43,7 @@
 
 import winsound
 import pyautogui as pag
+import sys
 import time
 from python_imagesearch.imagesearch import *
 
@@ -68,7 +69,9 @@ while i < 2:
         pos = imagesearch(image)
         if pos[0] != -1:
             if "crypt" in image:
-                #winsound.Beep(freqMerc, dur)
+                if len(sys.argv) > 1 and sys.argv[1] == '1':
+                    winsound.Beep(freqMerc, dur)
+
                 print( image )
                 print( pos )
                 xpos = pos

@@ -822,11 +822,11 @@ sub run_state_machine(;$;$)
 sub main()
 {
 	#my $screen_type = "HALF SCREEN";
-	#my $screen_type = "FULL SCREEN";
-	my $screen_type = "DESKTOP";
+	my $screen_type = "FULL SCREEN";
+	#my $screen_type = "DESKTOP";
 
 	# Send many crypt mining sequences
-	my $max   = 2;
+	my $max   = 20000;
 	my $r2    = 0;
 	my $retry = 0;
 	my $good  = 0;

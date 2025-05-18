@@ -68,8 +68,6 @@ no warnings 'uninitialized';
 
 use Win32::Sound;
 
-#Win32::Sound::Play("SystemStart");
-
 srand(time());
 
 $| = 1;
@@ -91,6 +89,11 @@ Win32::API::Struct->typedef( 'POINT' => qw( LONG x; LONG y; ) );
 Win32::API->Import('user32' => 'BOOL GetCursorPos(LPPOINT pt)');
 Win32::API->Import('user32' => 'BOOL SetCursorPos(int x, int y)');
 Win32::API->Import('user32' => 'void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo)');
+
+sub playSoundSystemStart()
+{
+	#Win32::Sound::Play("SystemStart");
+}
 
 sub moveMouseCursorPosition($$)
 {
@@ -157,13 +160,14 @@ my @half_left_crypt_speedup_close_mouse_xy    = qw( 714 271 );
 # FULL SCREEN 100% CHROME / 25% GAME ZOOM + Chrome Bookmark bar
 #########################################################################################
 
-my @full_telescope_mouse_xy                   = qw( 564 727 );
+my @full_telescope_mouse_xy                   = qw( 564 730 );
 my @full_crypt_menu_mouse_xy                  = qw( 542 435 );
 
-my @full_crypt_menu_first_mouse_xy            = qw( 975 445 );
-my @full_crypt_menu_second_mouse_xy           = qw( 975 525 );
-my @full_crypt_menu_third_mouse_xy            = qw( 975 605 );
-my @full_crypt_menu_fourth_mouse_xy           = qw( 975 685 );
+# LAVA oil fix
+my @full_crypt_menu_first_mouse_xy            = qw( 975 464 );#qw( 975 445 );
+my @full_crypt_menu_second_mouse_xy           = qw( 975 544 );#qw( 975 525 );
+my @full_crypt_menu_third_mouse_xy            = qw( 975 624 );#qw( 975 605 );
+my @full_crypt_menu_fourth_mouse_xy           = qw( 975 699 );#qw( 975 685 );qw( 975 705 );
 
 my @full_crypt_first_mouse_xy                 = @full_crypt_menu_third_mouse_xy;
 
@@ -518,7 +522,7 @@ sub half_left_state_machine()
 
 	usleep($wait_screen);
 
-	Win32::Sound::Play("SystemStart");
+	playSoundSystemStart();
 
 	usleep($wait_screen);
 
@@ -528,9 +532,9 @@ sub half_left_state_machine()
 	usleep($wait_click);
 	usleep($wait_screen);
 
-	Win32::Sound::Play("SystemStart");
+	playSoundSystemStart();
 	usleep($wait_crypt);
-	Win32::Sound::Play("SystemStart");
+	playSoundSystemStart();
 
 	return 0;
 }
@@ -793,7 +797,7 @@ sub full_screen_state_machine(;$;$)
 
 	usleep($wait_screen);
 
-	Win32::Sound::Play("SystemStart");
+	playSoundSystemStart();
 
 	usleep($wait_screen);
 
@@ -803,9 +807,9 @@ sub full_screen_state_machine(;$;$)
 	usleep($wait_click);
 	usleep($wait_screen);
 
-	Win32::Sound::Play("SystemStart");
+	playSoundSystemStart();
 	usleep($wait_crypt);
-	Win32::Sound::Play("SystemStart");
+	playSoundSystemStart();
 
 	return 0;
 }
@@ -815,7 +819,7 @@ sub full_screen_state_machine(;$;$)
 sub main()
 {
 	# Send many crypt mining sequences
-	my $max   = 7800;
+	my $max   = 10000;
 	my $r2    = 0;
 	my $retry = 0;
 	my $good  = 0;
@@ -824,11 +828,11 @@ sub main()
 	my $pt = getMouseXYCoordinates();
 
 	print "Sleep 5 seconds... GO!\n\n";
-	Win32::Sound::Play("SystemStart");
+	playSoundSystemStart();
 	sleep(5);
 
 
-	Win32::Sound::Play("SystemStart");
+	playSoundSystemStart();
 
 	for(my $i = 1; $i <= $max; ++$i)
 	{
@@ -878,10 +882,10 @@ sub main()
 			exit(1);
 		}
 
-		Win32::Sound::Play("SystemStart");
+		playSoundSystemStart();
 	}
 
-	Win32::Sound::Play("SystemStart");
+	playSoundSystemStart();
 }
 
 main();

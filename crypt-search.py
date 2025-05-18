@@ -68,7 +68,7 @@ while i < 2:
         pos = imagesearch(image)
         if pos[0] != -1:
             if "crypt" in image:
-                winsound.Beep(freqMerc, dur)
+                #winsound.Beep(freqMerc, dur)
                 print( image )
                 print( pos )
                 xpos = pos

@@ -59,7 +59,7 @@ while i < 10:
     # 25% resolution square image search
     pos = imagesearch("crypt-green-misclick-title.png")
     if pos[0] != -1:
-        winsound.Beep(freqMerc, dur)
+        #winsound.Beep(freqMerc, dur)
         print( pos )
         del pos
         exit( 0 )

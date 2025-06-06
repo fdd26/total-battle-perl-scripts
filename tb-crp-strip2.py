@@ -29,7 +29,18 @@ PYTHON3_PATH_EXE  = r"C:\Progra~1\Python312\python.exe"
 mouse_delta_x_swing = 0
 mouse_delta_y_swing = 0
 
-def playsound(wav)
+import winsound
+
+PERL_WITH_SOUND = True  # Equivalent to $PERL_WITH_SOUND in Perl
+
+def play_sound_system_start(state=-1):
+    if PERL_WITH_SOUND:
+        if state >= 0:
+            print(f"Play State [{state}]")
+        # Plays the Windows "SystemStart" system sound
+        winsound.PlaySound("SystemStart", winsound.SND_ALIAS)
+
+def playsound(wav):
     # Load and play the WAV file
     wave_obj = simpleaudio.WaveObject.from_wave_file(wav)
     play_obj = wave_obj.play()
@@ -55,11 +66,11 @@ def send_left_click(x, y):
 def send_right_click(x, y):
     mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, x, y)
 
-def play_sound(state=None):
+def play_sound_system_start(state=None):
     if PERL_WITH_SOUND:
         print(f"Play Sound State: {state}")
         try:
-            playsound("SystemStart.wav")
+            winsound.PlaySound("SystemStart", winsound.SND_ALIAS)
         except Exception as e:
             print(f"Sound error: {e}")
 
@@ -199,7 +210,7 @@ def full_screen_state_machine(i=-1, skip=0):
         send_left_click(0, 0)
         time.sleep(wait_click)
 
-    play_sound(8)
+    play_sound_system_start(8)
 
     # Close speedup
     move_mouse_cursor(full_crypt_speedup_close_mouse_xy[0] + dx, full_crypt_speedup_close_mouse_xy[1] + dy)
@@ -207,9 +218,9 @@ def full_screen_state_machine(i=-1, skip=0):
     send_left_click(0, 0)
     time.sleep(wait_click + wait_screen)
 
-    play_sound(9)
+    play_sound_system_start(9)
     time.sleep(wait_crypt)
-    play_sound(10)
+    play_sound_system_start(10)
 
     return 0
 
@@ -217,9 +228,25 @@ def full_screen_state_machine(i=-1, skip=0):
 def main():
     get_mouse_xy()
     print("Starting automation in 5 seconds...")
-    play_sound(1)
+
+    get_mouse_xy()
+    print("Sleeping for 5 seconds before starting...")
+
+    play_sound_system_start(1)
     time.sleep(5)
 
-    max_loops = 10000
-    retry = 0
-    good  = 0
+    for i in range(1, 100):
+        print(f"[{i}] - Running automation step")
+        result = full_screen_state_machine(i % 4)
+        if result == 0:
+            print(f"Success iteration {i}")
+        else:
+            print(f"Failure at iteration {i}")
+            break
+        play_sound_system_start(3)
+        time.sleep(1)
+
+    play_sound_system_start(4)
+
+if __name__ == "__main__":
+    main()

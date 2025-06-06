@@ -10,7 +10,10 @@ import time
 import re
 import ctypes
 #from playsound import playsound
-import simpleaudio
+#import simpleaudio
+import winsound
+import win32api
+import win32con
 
 # Constants for mouse events
 MOUSEEVENTF_LEFTDOWN  = 0x02
@@ -29,7 +32,6 @@ PYTHON3_PATH_EXE  = r"C:\Progra~1\Python312\python.exe"
 mouse_delta_x_swing = 0
 mouse_delta_y_swing = 0
 
-import winsound
 
 PERL_WITH_SOUND = True  # Equivalent to $PERL_WITH_SOUND in Perl
 
@@ -40,31 +42,26 @@ def play_sound_system_start(state=-1):
         # Plays the Windows "SystemStart" system sound
         winsound.PlaySound("SystemStart", winsound.SND_ALIAS)
 
-def playsound(wav):
-    # Load and play the WAV file
-    wave_obj = simpleaudio.WaveObject.from_wave_file(wav)
-    play_obj = wave_obj.play()
-    play_obj.wait_done()  # Wait until sound finishes playing
-
-
-# Mouse click using ctypes (Windows API)
-def mouse_event(flags, x, y, data=0, extra=0):
-    ctypes.windll.user32.mouse_event(flags, x, y, data, extra)
-
+# Mouse click using Windows API
 def move_mouse_cursor(x, y):
-    print(f"Moving mouse to: ({x}, {y})")
-    pyautogui.moveTo(x, y)
-
-def get_mouse_xy():
-    x, y = pyautogui.position()
-    print(f"Cursor is at: ({x}, {y})")
-    return x, y
+    print(f"Moving mouse to ({x}, {y})")
+    win32api.SetCursorPos((x, y))  # Matches Perl behavior
 
 def send_left_click(x, y):
-    mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, x, y)
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,  0, 0, 0, 0)
+    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,    0, 0, 0, 0)
 
-def send_right_click(x, y):
-    mouse_event(MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP, x, y)
+def send_right_click():
+    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN, 0, 0, 0, 0)
+    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP,   0, 0, 0, 0)
+
+def get_mouse_xy():
+    try:
+        x, y = win32api.GetCursorPos()
+        print(f"Cursor is at: ({x}, {y})")
+        return (x, y)
+    except Exception as e:
+        print(f"GetCursorPos failed: {e}")
 
 def play_sound_system_start(state=None):
     if PERL_WITH_SOUND:
@@ -205,7 +202,7 @@ def full_screen_state_machine(i=-1, skip=0):
         return 3
 
     # Perform speedup clicks
-    for _ in range(6):
+    for k in range(6):
         move_mouse_cursor(full_crypt_speedup_second_mouse_xy[0] + dx, full_crypt_speedup_second_mouse_xy[1] + dy)
         send_left_click(0, 0)
         time.sleep(wait_click)
@@ -225,9 +222,11 @@ def full_screen_state_machine(i=-1, skip=0):
     return 0
 
 # Main control loop
+import time
+
 def main():
-    get_mouse_xy()
-    print("Starting automation in 5 seconds...")
+    max_iterations = 100
+    max_retries    = 3  # max retries per iteration
 
     get_mouse_xy()
     print("Sleeping for 5 seconds before starting...")
@@ -235,18 +234,27 @@ def main():
     play_sound_system_start(1)
     time.sleep(5)
 
-    for i in range(1, 100):
-        print(f"[{i}] - Running automation step")
-        result = full_screen_state_machine(i % 4)
-        if result == 0:
-            print(f"Success iteration {i}")
+    for i in range(1, max_iterations + 1):
+        retries = 0
+        while retries < max_retries:
+            print(f"[{i}] - Running automation step, attempt {retries + 1}")
+            result = full_screen_state_machine(i % 4)
+            if result == 0:
+                print(f"Success iteration {i}")
+                play_sound_system_start(3)
+                time.sleep(1)
+                break  # success, move to next iteration
+            else:
+                print(f"Failure at iteration {i}, retrying...")
+                retries += 1
+                time.sleep(1)
         else:
-            print(f"Failure at iteration {i}")
+            # Exceeded max retries
+            print(f"Failed iteration {i} after {max_retries} retries, stopping.")
             break
-        play_sound_system_start(3)
-        time.sleep(1)
 
     play_sound_system_start(4)
+
 
 if __name__ == "__main__":
     main()

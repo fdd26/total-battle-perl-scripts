@@ -91,13 +91,13 @@ Win32::API->Import('user32' => 'BOOL SetCursorPos(int x, int y)');
 Win32::API->Import('user32' => 'void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo)');
 
 my $NO_SOUND          = 1;
-my $PERL_WITH_SOUND   = 1;
-my $PYTHON_WITH_SOUND = 1;
+my $PERL_WITH_SOUND   = 0;
+my $PYTHON_WITH_SOUND = 0;
 
 if ($NO_SOUND)
 {
 	$PERL_WITH_SOUND   = 0;
-	$PYTHON_WITH_SOUN  = 0;
+	$PYTHON_WITH_SOUND = 0;
 }
 
 sub playSoundSystemStart(;$)

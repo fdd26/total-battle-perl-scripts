@@ -16,6 +16,8 @@ srand(time());
 $| = 1;
 
 use Win32::API;
+use Win32::API::Struct;
+
 use Time::HiRes qw(usleep);
 
 Win32::API::Struct->typedef( 'POINT' => qw( LONG x; LONG y; ) );
@@ -59,6 +61,11 @@ sub getMouseXYCoordinates()
 {
 	#### using Win32 OO semantics
 	my $pt = Win32::API::Struct->new('POINT');
+
+	# Initialize to avoid warning
+	$pt->{'x'} = 0;
+	$pt->{'y'} = 0;
+
 	my $b = GetCursorPos($pt) or die("GetCursorPos failed: " . $^E);
 	print "Cursor [$b] is at: ". $pt->{'x'} .", ". $pt->{'y'} ."\n";
 	return $pt;

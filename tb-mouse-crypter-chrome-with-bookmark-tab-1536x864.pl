@@ -78,6 +78,7 @@ $| = 1;
 # Mouse 32-bit API
 #
 use Win32::API;
+use Win32::API::Struct;
 
 #
 # @see https://stackoverflow.com/questions/896904/how-do-i-sleep-for-a-millisecond-in-perl
@@ -104,6 +105,11 @@ sub getMouseXYCoordinates()
 {
 	#### using Win32 OO semantics
 	my $pt = Win32::API::Struct->new('POINT');
+
+	# Initialize to avoid warning
+	$pt->{'x'} = 0;
+	$pt->{'y'} = 0;
+
 	my $b = GetCursorPos($pt) or die("GetCursorPos failed: " . $^E);
 	print "Cursor [$b] is at: ". $pt->{'x'} .", ". $pt->{'y'} ."\n";
 	return $pt;

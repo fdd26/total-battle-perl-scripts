@@ -170,6 +170,37 @@ my $PYTHON3_PATH_EXE    = q{C:\Progra~1\Python312\python.exe};
 # FULL SCREEN 100% CHROME / 25% GAME ZOOM + Chrome Bookmark bar
 #########################################################################################
 
+my @full_monster_telescope_mouse_xy_middle          = qw( 554 737 );
+my @full_monster_menu_mouse_xy                      = qw( 544 390 );
+
+my @full_monster_menu_first_mouse_xy                = qw( 970 503 );
+my @full_monster_menu_second_mouse_xy               = qw( 970 582 );
+my @full_monster_menu_third_mouse_xy                = qw( 970 661 );
+
+my @full_monster_middle_mouse_xy                    = qw( 766 490 );
+my @full_monster_attack_mouse_xy                    = qw( 771 583 );
+my @full_monster_select_all_mouse_xy                = qw( 710 654 );
+my @full_monster_start_march_mouse_xy               = qw( 688 698 );
+
+my @full_monster_start_march_mouse_xy               = qw( 688 698 );
+
+my @full_monster_speedup_top_menu_mouse_xy          = qw( 995 200 );
+
+my @full_monster_speedup_first_mouse_xy             = qw( 899 430 );
+my @full_monster_speedup_second_mouse_xy            = qw( 899 517 );
+my @full_monster_speedup_third_mouse_xy             = qw( 899 606 );
+
+my @full_monster_speedup_close_mouse_xy             = qw( 984 284 );
+
+my @full_monster_repair_bottom_menu_mouse_xy        = qw( 750 678 );
+my @full_monster_repair_all_mouse_xy                = qw( 818 697 );
+my @full_monster_repair_close_mouse_xy              = qw(1078 304 );
+
+
+#########################################################################################
+# FULL SCREEN 100% CHROME / 25% GAME ZOOM + Chrome Bookmark bar
+#########################################################################################
+
 my @full_telescope_mouse_xy                   = qw( 564 730 );
 my @full_crypt_menu_mouse_xy                  = qw( 542 435 );
 
@@ -372,36 +403,36 @@ sub full_screen_state_machine(;$;$)
 	{
 		if ($i == 1)
 		{
-			@full_crypt_first_mouse_xy = @full_crypt_menu_second_mouse_xy;
+			@full_monster_first_mouse_xy = @full_monster_menu_second_mouse_xy;
 		}
 		elsif ($i == 2)
 		{
-			@full_crypt_first_mouse_xy = @full_crypt_menu_third_mouse_xy;
+			@full_monster_first_mouse_xy = @full_monster_menu_third_mouse_xy;
 		}
 		elsif ($i == 3)
 		{
-			@full_crypt_first_mouse_xy = @full_crypt_menu_fourth_mouse_xy;
+			@full_monster_first_mouse_xy = @full_monster_menu_fourth_mouse_xy;
 		}
 		else
 		{
-			@full_crypt_first_mouse_xy = @full_crypt_menu_first_mouse_xy;
+			@full_monster_first_mouse_xy = @full_monster_menu_first_mouse_xy;
 		}
 	}
 
-	my @telescope_mouse_xy               = @full_telescope_mouse_xy;
-	my @crypt_menu_mouse_xy              = @full_crypt_menu_mouse_xy;
-	my @crypt_first_mouse_xy             = @full_crypt_first_mouse_xy;
-	my @crypt_middle_mouse_xy            = @full_crypt_middle_mouse_xy;
-	my @crypt_middle_mouse_lower_xy      = @full_crypt_middle_mouse_lower_xy;
-	my @crypt_explore_right_mouse_xy     = @full_crypt_explore_right_mouse_xy;
-	my @crypt_misclick_top_menu_mouse_xy = @full_crypt_misclick_top_menu_mouse_xy;
-	my @crypt_speedup_top_menu_mouse_xy  = @full_crypt_speedup_top_menu_mouse_xy;
+	my @telescope_mouse_xy                 = @full_telescope_mouse_xy;
+	my @monster_menu_mouse_xy              = @full_monster_menu_mouse_xy;
+	my @monster_first_mouse_xy             = @full_monster_first_mouse_xy;
+	my @monster_middle_mouse_xy            = @full_monster_middle_mouse_xy;
+	my @monster_middle_mouse_lower_xy      = @full_monster_middle_mouse_lower_xy;
+	my @monster_explore_right_mouse_xy     = @full_monster_explore_right_mouse_xy;
+	my @monster_misclick_top_menu_mouse_xy = @full_monster_misclick_top_menu_mouse_xy;
+	my @monster_speedup_top_menu_mouse_xy  = @full_monster_speedup_top_menu_mouse_xy;
 
-	my @crypt_speedup_first_mouse_xy     = @full_crypt_speedup_first_mouse_xy;
-	my @crypt_speedup_second_mouse_xy    = @full_crypt_speedup_second_mouse_xy;
-	my @crypt_speedup_third_mouse_xy     = @full_crypt_speedup_third_mouse_xy;
+	my @monster_speedup_first_mouse_xy     = @full_monster_speedup_first_mouse_xy;
+	my @monster_speedup_second_mouse_xy    = @full_monster_speedup_second_mouse_xy;
+	my @monster_speedup_third_mouse_xy     = @full_monster_speedup_third_mouse_xy;
 
-	my @crypt_speedup_close_mouse_xy     = @full_crypt_speedup_close_mouse_xy;
+	my @monster_speedup_close_mouse_xy     = @full_monster_speedup_close_mouse_xy;
 
 	# RANDOM offset of [-x, x]
 	my $dx = int(rand($mouse_delta_x_swing * 2)) - int($mouse_delta_x_swing);
@@ -414,7 +445,7 @@ sub full_screen_state_machine(;$;$)
 	my $wait_screen  = $dw +   800000; # 800 ms
 	my $wait_crypt   = $dw + 28000000; # 28000 ms
 
-	my @crypt_speedup_mouse_xy = @crypt_speedup_second_mouse_xy;
+	my @monster_speedup_mouse_xy = @monster_speedup_second_mouse_xy;
 
 	if (1)
 	{
@@ -470,7 +501,7 @@ sub full_screen_state_machine(;$;$)
 			}
 			else
 			{
-				@crypt_middle_mouse_xy = @{ $crypt_pos_ref };
+				@monster_middle_mouse_xy = @{ $crypt_pos_ref };
 
 				print "Using NEW CRYPT at = (". ( $crypt_middle_mouse_xy[0] + $dx) . ",". ( $crypt_middle_mouse_xy[1] + $dy ). ");\n";
 
@@ -499,7 +530,7 @@ sub full_screen_state_machine(;$;$)
 		}
 		elsif (1)
 		{
-			my @crypt_misclick_green_title_pos = @{$crypt_misclick_green_title_pos_ref};
+			my @monster_misclick_green_title_pos = @{$crypt_misclick_green_title_pos_ref};
 			print "Misclick green title window was found at [" . $crypt_misclick_green_title_pos[0] .",". $crypt_misclick_green_title_pos[1] . "]\n";
 
 			# Cursor is at: 994, 348
@@ -517,7 +548,7 @@ sub full_screen_state_machine(;$;$)
 
 				print "MOVE MOUSE LOWER [". $crypt_middle_mouse_lower_xy[0] .",". $crypt_middle_mouse_lower_xy[1] . "]\n";
 
-				#my @full_crypt_middle_mouse_xy                = qw( 773 488 );
+				#my @full_monster_middle_mouse_xy                = qw( 773 488 );
 				# 970, 604
 				moveMouseCursorPosition( $crypt_middle_mouse_lower_xy[0]  + $dx, $crypt_middle_mouse_lower_xy[1]      + $dy );
 				usleep($wait_move_xy);

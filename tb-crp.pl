@@ -844,7 +844,9 @@ sub full_screen_state_machine(;$;$)
 sub main()
 {
 	# Send many crypt mining sequences
-	my $max   = 10000;
+	my $max   = 9000;
+	#1000;
+	#10000;
 	my $r2    = 0;
 	my $retry = 0;
 	my $good  = 0;
@@ -899,7 +901,7 @@ sub main()
 			}
 		}
 
-		if ($retry > 8)
+		if ($retry > 12)
 		{
 			print "BAD RETRY EXITING... [$retry] after GOOD [$good] / [$total]\n";
 			print strftime("%Y-%m-%d %H:%M:%S", localtime(time) );

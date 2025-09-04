@@ -28,11 +28,11 @@
 # pip3 install python_imagesearch
 #
 # TYPE THIS to run the program
-# python.exe Is-Crypt-Left-Menu.py
+# python.exe Is-Monster-Left-Menu.py
 #
-# OR double-click on Is-Crypt-Left-Menu.py
+# OR double-click on Is-Monster-Left-Menu.py
 #
-# OPEN crypt-left-menu.png to test, you should hear some beeps.
+# OPEN monster-left-menu.png to test, you should hear some beeps.
 #
 #####################################################################
 #
@@ -57,7 +57,7 @@ dur = 500
 i = 1
 while i < 10:
     # 25% resolution square image search
-    pos = imagesearch("crypt-left-menu.png")
+    pos = imagesearch("monster-left-menu.png")
     if pos[0] != -1:
         if len(sys.argv) > 1 and sys.argv[1] == '1':
             winsound.Beep(freqMerc, dur)

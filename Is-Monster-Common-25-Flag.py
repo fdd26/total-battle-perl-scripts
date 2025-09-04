@@ -28,11 +28,11 @@
 # pip3 install python_imagesearch
 #
 # TYPE THIS to run the program
-# python.exe Is-Crypt-Common-25-Flag.py
+# python.exe Is-Monster-Common-25-Flag.py
 #
-# OR double-click on Is-Crypt-Common-25-Flag.py
+# OR double-click on Is-Monster-Common-25-Flag.py
 #
-# OPEN common-crypt-25b.png to test, you should hear some beeps.
+# OPEN common-monster-25b.png to test, you should hear some beeps.
 #
 #####################################################################
 #
@@ -58,12 +58,12 @@ dur = 500
 x0 = 0
 y0 = 0
 # 773 488
-#pos = imagesearcharea("./common-crypt-25.png", 540, 440, 820, 600)
+#pos = imagesearcharea("./common-monster-25.png", 540, 440, 820, 600)
 #x0 = 600
 #y0 = 480
-#pos = imagesearcharea("./common-crypt-25b.png", x0, y0, 820, 600)
+#pos = imagesearcharea("./common-monster-25b.png", x0, y0, 820, 600)
 
-pos = imagesearch("./common-crypt-25b.png")
+pos = imagesearch("./common-monster-25b.png")
 if pos[0] != -1:
     x = x0 + pos[0]
     y = y0 + pos[1]

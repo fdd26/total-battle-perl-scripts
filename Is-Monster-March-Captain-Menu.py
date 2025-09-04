@@ -28,11 +28,11 @@
 # pip3 install python_imagesearch
 #
 # TYPE THIS to run the program
-# python.exe Is-Crypt-March-Carter-Menu.py
+# python.exe Is-Monster-March-Captain-Menu.py
 #
-# OR double-click on Is-Crypt-March-Carter-Menu.py
+# OR double-click on Is-Monster-March-Captain-Menu.py
 #
-# OPEN crypt-march-carter-menu.png to test, you should hear some beeps.
+# OPEN monster-march-captain-menu.png to test, you should hear some beeps.
 #
 #####################################################################
 #
@@ -59,7 +59,7 @@ i = 1
 notfound = 0
 while i < 1800:
     # 25% resolution square image search
-    pos = imagesearch("crypt-march-carter-menu.png")
+    pos = imagesearch("monster-march-captain-menu.png")
     if pos[0] != -1:
         if len(sys.argv) > 1 and sys.argv[1] == '1':
             winsound.Beep(freqMerc, dur)

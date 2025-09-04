@@ -28,11 +28,11 @@
 # pip3 install python_imagesearch
 #
 # TYPE THIS to run the program
-# python.exe Is-Crypt-Green-Speedup-Title.py
+# python.exe Is-Monster-Green-Speedup-Title.py
 #
-# OR double-click on Is-Crypt-Green-Speedup-Title.py
+# OR double-click on Is-Monster-Green-Speedup-Title.py
 #
-# OPEN crypt-green-speedup-title.png to test, you should hear some beeps.
+# OPEN monster-green-speedup-title.png to test, you should hear some beeps.
 #
 #####################################################################
 #
@@ -58,7 +58,7 @@ dur = 500
 i = 1
 while i < 10:
     # 25% resolution square image search
-    pos = imagesearch("crypt-green-speedup-title.png")
+    pos = imagesearch("monster-green-speedup-title.png")
     if pos[0] != -1:
         if len(sys.argv) > 1 and sys.argv[1] == '1':
             winsound.Beep(freqMerc, dur)

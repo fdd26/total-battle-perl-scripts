@@ -170,7 +170,7 @@ my $PYTHON3_PATH_EXE    = q{C:\Progra~1\Python312\python.exe};
 # FULL SCREEN 100% CHROME / 25% GAME ZOOM + Chrome Bookmark bar
 #########################################################################################
 
-my @full_monster_telescope_mouse_xy_middle          = qw( 554 737 );
+my @full_monster_telescope_mouse_xy                 = qw( 554 737 );
 my @full_monster_menu_mouse_xy                      = qw( 544 390 );
 
 my @full_monster_menu_first_mouse_xy                = qw( 970 503 );
@@ -419,20 +419,30 @@ sub full_screen_state_machine(;$;$)
 		}
 	}
 
-	my @telescope_mouse_xy                 = @full_telescope_mouse_xy;
-	my @monster_menu_mouse_xy              = @full_monster_menu_mouse_xy;
-	my @monster_first_mouse_xy             = @full_monster_first_mouse_xy;
-	my @monster_middle_mouse_xy            = @full_monster_middle_mouse_xy;
-	my @monster_middle_mouse_lower_xy      = @full_monster_middle_mouse_lower_xy;
-	my @monster_explore_right_mouse_xy     = @full_monster_explore_right_mouse_xy;
-	my @monster_misclick_top_menu_mouse_xy = @full_monster_misclick_top_menu_mouse_xy;
-	my @monster_speedup_top_menu_mouse_xy  = @full_monster_speedup_top_menu_mouse_xy;
+	my @telescope_mouse_xy                         = @full_monster_telescope_mouse_xy;
+	my @monster_menu_mouse_xy                      = @full_monster_menu_mouse_xy;
+	my @monster_menu_first_mouse_xy                = @full_monster_menu_first_mouse_xy;
+	my @monster_menu_second_mouse_xy               = @full_monster_menu_second_mouse_xy;
+	my @monster_menu_third_mouse_xy                = @full_monster_menu_third_mouse_xy;
 
-	my @monster_speedup_first_mouse_xy     = @full_monster_speedup_first_mouse_xy;
-	my @monster_speedup_second_mouse_xy    = @full_monster_speedup_second_mouse_xy;
-	my @monster_speedup_third_mouse_xy     = @full_monster_speedup_third_mouse_xy;
+	my @monster_middle_mouse_xy                    = @full_monster_middle_mouse_xy;
+	my @monster_attack_mouse_xy                    = @full_monster_attack_mouse_xy;			# CHANGED
+	my @monster_select_all_mouse_xy                = @full_monster_select_all_mouse_xy;
+	my @monster_start_march_mouse_xy               = @full_monster_start_march_mouse_xy;
 
-	my @monster_speedup_close_mouse_xy     = @full_monster_speedup_close_mouse_xy;
+	my @monster_start_march_mouse_xy               = @full_monster_start_march_mouse_xy;
+
+	my @monster_speedup_top_menu_mouse_xy          = @full_monster_speedup_top_menu_mouse_xy;
+
+	my @monster_speedup_first_mouse_xy             = @full_monster_speedup_first_mouse_xy;
+	my @monster_speedup_second_mouse_xy            = @full_monster_speedup_second_mouse_xy;
+	my @monster_speedup_third_mouse_xy             = @full_monster_speedup_third_mouse_xy;
+
+	my @monster_speedup_close_mouse_xy             = @full_monster_speedup_close_mouse_xy;
+
+	my @monster_repair_bottom_menu_mouse_xy        = @full_monster_repair_bottom_menu_mouse_xy; # ADDED
+	my @monster_repair_all_mouse_xy                = @full_monster_repair_all_mouse_xy;
+	my @monster_repair_close_mouse_xy              = @full_monster_repair_close_mouse_xy;
 
 	# RANDOM offset of [-x, x]
 	my $dx = int(rand($mouse_delta_x_swing * 2)) - int($mouse_delta_x_swing);

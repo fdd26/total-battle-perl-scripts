@@ -57,7 +57,7 @@ use POSIX qw(strftime);
 #########################################################################################
 #
 #
-# Total Battle - Mouse Click Crypter for 1536x864 Chrome browser with bookmark tab offset
+# Total Battle - Mouse Click Monster automation for 1536x864 Chrome browser with bookmark tab offset
 #
 #use strict;
 no strict;
@@ -201,7 +201,7 @@ my @full_monster_repair_close_mouse_xy              = qw(1078 304 );
 sub validate_is_monster_left_menu()
 {
 	my $python3 = $PYTHON3_PATH_EXE;
-	my $script  = q{Is-Crypt-Left-Menu.py};
+	my $script  = q{Is-Monster-Left-Menu.py};  #FIXME
 	my @lines   = qx($python3 $script $PYTHON_WITH_SOUND);
 	my $output  = join('\n', @lines);
 
@@ -209,7 +209,7 @@ sub validate_is_monster_left_menu()
 	{
 		print "is_monster_left_menu: BAD was found\n";
 
-		print "Crypt Left Menu was not found, the game is stuck\n";
+		print "Monster Left Menu was not found, the game is stuck\n";
 		#exit(1);
 		return undef;
 	}
@@ -233,7 +233,7 @@ sub validate_is_monster_left_menu()
 sub validate_is_monster_gray_title()
 {
 	my $python3 = $PYTHON3_PATH_EXE;
-	my $script  = q{Is-Crypt-Gray-Title.py};
+	my $script  = q{Is-Monster-Gray-Title.py};
 	my @lines   = qx($python3 $script $PYTHON_WITH_SOUND);
 	my $output  = join('\n', @lines);
 
@@ -262,7 +262,7 @@ sub validate_is_monster_gray_title()
 sub validate_is_monster_green_misclick_title()
 {
 	my $python3 = $PYTHON3_PATH_EXE;
-	my $script  = q{Is-Crypt-Green-Misclick-Title.py};
+	my $script  = q{Is-Monster-Green-Misclick-Title.py};
 	my @lines   = qx($python3 $script $PYTHON_WITH_SOUND);
 	my $output  = join('\n', @lines);
 
@@ -291,7 +291,7 @@ sub validate_is_monster_green_misclick_title()
 sub validate_is_monster_green_speedup_title()
 {
 	my $python3 = $PYTHON3_PATH_EXE;
-	my $script  = q{Is-Crypt-Green-Speedup-Title.py};
+	my $script  = q{Is-Monster-Green-Speedup-Title.py};
 	my @lines   = qx($python3 $script $PYTHON_WITH_SOUND);
 	my $output  = join('\n', @lines);
 
@@ -483,7 +483,7 @@ sub full_screen_state_machine(;$;$)
 			{
 				@monster_middle_mouse_xy = @{ $monster_pos_ref };
 
-				print "Using NEW CRYPT at = (". ( $monster_middle_mouse_xy[0] + $dx) . ",". ( $monster_middle_mouse_xy[1] + $dy ). ");\n";
+				print "Using NEW Monster at = (". ( $monster_middle_mouse_xy[0] + $dx) . ",". ( $monster_middle_mouse_xy[1] + $dy ). ");\n";
 
 				moveMouseCursorPosition( $monster_middle_mouse_xy[0]       + $dx, $monster_middle_mouse_xy[1]        + $dy );
 				usleep($wait_move_xy);
@@ -537,7 +537,7 @@ sub full_screen_state_machine(;$;$)
 
 				usleep($wait_screen);
 
-				print "Validate Crypt Gray Title #2\n";
+				print "Validate Monster Gray Title #2\n";
 
 				my $monster_gray_title_pos_ref2 = validate_is_monster_gray_title();
 				print Dumper $monster_gray_title_pos_ref2;
@@ -547,7 +547,7 @@ sub full_screen_state_machine(;$;$)
 				}
 				else
 				{
-					print "Crypt was shifted below\n";
+					print "Monster was shifted below\n";
 				}
 			}
 			else
@@ -711,10 +711,42 @@ exit(0);
 1;
 
 #########################################################################################
+
+__DATA__
+554.737	telescope
+544.390	monsters
+
+972.503	#1
+970.582	#2
+969.661	#3
+
+
+766.490	middle
+
+771.583	attack
+
+710.654	select_all
+
+688.698	start_march
+
+992.200	speed_up
+
+899.516	use_speed_up
+
+981.286	close_window_speed_up
+
+750.678	repair
+818.697	revive_all
+
+1078.304	close_window_repair
+
+
+#########################################################################################
 #
 # Perl script compilation ends right here...
 #
 #########################################################################################
+
 __END__
 :endofperl
 

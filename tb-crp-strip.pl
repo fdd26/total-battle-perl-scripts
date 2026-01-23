@@ -1,9 +1,62 @@
-#!perl
+@rem = '--*-Perl-*--
+@echo off
+if "%OS%" == "Windows_NT" goto WinNT
+perl -x -S "%0" %1 %2 %3 %4 %5 %6 %7 %8 %9
+goto endofperl
+:WinNT
+perl -x -S %0 %*
+if NOT "%COMSPEC%" == "%SystemRoot%\system32\cmd.exe" goto endofperl
+if %errorlevel% == 9009 echo You do not have Perl in your PATH.
+if errorlevel 1 goto script_failed_so_exit_with_non_zero_val 2>nul
+goto endofperl
+@rem ';
+#!perl -w
+#line 15
+#########################################################################################
+#
+# BSD 2-Clause Licensed source code
+#
+# Copyright (c) 2024, fdd26
+#
+#########################################################################################
+# The code above is valid Perl5 where you simply put all the MS-DOS Console Batch junk
+# inside a Perl array called "@rem", which is simply discarded and ignored
+# and also a valid Batch command line with remarks / comments or @rem
+# that will simply call the Perl5 command line on itself.
+#########################################################################################
+
+
+#########################################################################################
+# If this Perl script was run using a PHP interpreter by mistake, just exit(1)
+# and halt the PHP compiler like right now.
+#########################################################################################
+#<?php exit(1);__halt_compiler(); ?>
+#########################################################################################
+
+#########################################################################################
+#
+# Redeclare @rem fake array to ensure Perl5 strict mode works properly.
+#
+#########################################################################################
+
+my @rem = ();
+
+#########################################################################################
+#
+# Enforce Perl5 strict mode with warnings
+#
+#########################################################################################
+
 use strict;
 use warnings;
 use Data::Dumper;
 use POSIX qw(strftime);
 
+#########################################################################################
+#
+#
+# Total Battle - Mouse Click Crypter for 1536x864 Chrome browser with bookmark tab offset
+#
 no strict;
 
 use v5.14;
@@ -15,11 +68,20 @@ srand(time());
 
 $| = 1;
 
+#
+# Mouse 32-bit API
+#
 use Win32::API;
 use Win32::API::Struct;
 
+#
+# @see https://stackoverflow.com/questions/896904/how-do-i-sleep-for-a-millisecond-in-perl
+#
 use Time::HiRes qw(usleep);
 
+#
+# @see https://metacpan.org/release/BULKDD/Win32-API-0.84/source/samples/GetCursorPos.pl
+#
 Win32::API::Struct->typedef( 'POINT' => qw( LONG x; LONG y; ) );
 Win32::API->Import('user32' => 'BOOL GetCursorPos(LPPOINT pt)');
 Win32::API->Import('user32' => 'BOOL SetCursorPos(int x, int y)');
@@ -32,7 +94,7 @@ my $PYTHON_WITH_SOUND = 1;
 if ($NO_SOUND)
 {
 	$PERL_WITH_SOUND   = 0;
-	$PYTHON_WITH_SOUN  = 0;
+	$PYTHON_WITH_SOUND = 0;
 }
 
 sub playSoundSystemStart(;$)
@@ -97,8 +159,9 @@ my $mouse_delta_y_swing = 0;
 my $PYTHON3_PATH_EXE    = q{C:\Progra~1\Python312\python.exe};
 
 
+#########################################################################################
 # FULL SCREEN 100% CHROME / 25% GAME ZOOM + Chrome Bookmark bar
-
+#########################################################################################
 
 my @full_telescope_mouse_xy                   = qw( 564 730 );
 my @full_crypt_menu_mouse_xy                  = qw( 542 435 );
@@ -126,7 +189,7 @@ my @full_crypt_speedup_third_mouse_xy         = qw( 899 606 );
 
 my @full_crypt_speedup_close_mouse_xy         = qw( 984 284 );
 
-
+#########################################################################################
 
 sub validate_is_crypt_left_menu()
 {
@@ -158,7 +221,7 @@ sub validate_is_crypt_left_menu()
 	return undef;
 }
 
-
+#########################################################################################
 
 sub validate_is_crypt_gray_title()
 {
@@ -187,7 +250,7 @@ sub validate_is_crypt_gray_title()
 	return undef;
 }
 
-
+#########################################################################################
 
 sub validate_is_crypt_green_misclick_title()
 {
@@ -216,7 +279,7 @@ sub validate_is_crypt_green_misclick_title()
 	return undef;
 }
 
-
+#########################################################################################
 
 sub validate_is_crypt_green_speedup_title()
 {
@@ -245,7 +308,7 @@ sub validate_is_crypt_green_speedup_title()
 	return undef;
 }
 
-
+#########################################################################################
 
 sub find_crypt_position()
 {
@@ -273,6 +336,8 @@ sub find_crypt_position()
 
 	return undef;
 }
+
+#########################################################################################
 
 sub full_screen_state_machine(;$;$)
 {
@@ -547,10 +612,12 @@ sub full_screen_state_machine(;$;$)
 	return 0;
 }
 
+#########################################################################################
+
 sub main()
 {
 	# Send many crypt mining sequences
-	my $max   = 10000;
+	my $max   = 9000;
 	my $r2    = 0;
 	my $retry = 0;
 	my $good  = 0;
@@ -605,7 +672,7 @@ sub main()
 			}
 		}
 
-		if ($retry > 3)
+		if ($retry > 20)
 		{
 			print "BAD RETRY EXITING... [$retry] after GOOD [$good] / [$total]\n";
 			print strftime("%Y-%m-%d %H:%M:%S", localtime(time) );
@@ -622,3 +689,17 @@ sub main()
 main();
 exit(0);
 1;
+
+#########################################################################################
+#
+# Perl script compilation ends right here...
+#
+#########################################################################################
+__END__
+:endofperl
+
+@if [%NOPAUSE%]==[1] goto endofscript
+
+@pause
+
+:endofscript

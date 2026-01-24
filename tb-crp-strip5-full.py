@@ -1,13 +1,23 @@
 #!/usr/bin/env python3
 """
 Total Battle - Mouse Click Bot for 1536x864 Chrome browser with bookmark tab offset
-Converted from Perl to Python3
+
+Converted from Perl5 to Python3
+
+Working correctly as of 2026-01-23
+
+BSD 2-Clause Licensed source code
+
+Copyright (c) 2024-2026, fdd26
+
 """
 
 import sys
 import time
 import random
 import subprocess
+import re
+import winsound
 
 from datetime import datetime
 from ctypes   import windll, Structure, c_long, byref
@@ -149,7 +159,7 @@ class CryptBot:
         match = re.search(r'\((\d+),\s*(\d+)\)', output)
         if match:
             (x, y) = int(match.group(1)), int(match.group(2))
-            print(f"is_crypt_left_menu: Found ({x}, {y}", flush=True))
+            print(f"is_crypt_left_menu: Found ({x}, {y})", flush=True)
             return [x, y]
 
         return None

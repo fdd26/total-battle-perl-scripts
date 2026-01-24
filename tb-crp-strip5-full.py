@@ -83,8 +83,10 @@ class SoundManager:
             try:
                 import winsound
                 winsound.PlaySound("SystemStart", winsound.SND_ALIAS)
+                return True
             except Exception as e:
                 print(f"Sound playback failed: {e}", flush=True)
+        return False
 
 
 class CryptBot:
@@ -485,6 +487,7 @@ def main():
     print(f"GO!", flush=True)
     bot = CryptBot(no_sound=True, python_with_sound=False)
     bot.run(max_iterations=9000)
+    sys.exit(0)
 
 
 if __name__ == "__main__":

@@ -43,29 +43,31 @@ class MouseController:
     def get_cursor_pos(self):
         """Get current cursor position"""
         pt = POINT()
-        self.user32.GetCursorPos(byref(pt))
+        windll.user32.GetCursorPos(byref(pt))
         print(f"Cursor is at: {pt.x}, {pt.y}", flush=True)
         return (pt.x, pt.y)
 
     def set_cursor_pos(self, x, y):
         """Move cursor to specified position"""
         print(f"\nMoving cursor to ({x}, {y})")
-        return self.user32.SetCursorPos(int(x), int(y))
+        return windll.user32.SetCursorPos(int(x), int(y))
 
     def mouse_event(self, flags, dx=0, dy=0, data=0, extra_info=0):
         """Send mouse event"""
-        self.user32.mouse_event(flags, dx, dy, data, extra_info)
+        windll.user32.mouse_event(flags, dx, dy, data, extra_info)
+        return True
 
     def left_click(self, mx=0, my=0):
         """Perform left mouse click"""
         event = MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP
         self.mouse_event(event, mx, my, 0, 0)
+        return True
 
     def right_click(self, mx=0, my=0):
         """Perform right mouse click"""
         event = MOUSEEVENTF_RIGHTDOWN | MOUSEEVENTF_RIGHTUP
         self.mouse_event(event, mx, my, 0, 0)
-
+        return True
 
 class SoundManager:
     """Manages sound playback"""
@@ -128,6 +130,7 @@ class CryptBot:
     def usleep(self, microseconds):
         """Sleep for specified microseconds"""
         time.sleep(microseconds / 1000000.0)
+        return True
 
     def run_python_script(self, script_name):
         """Execute a Python script and return output"""
@@ -472,7 +475,7 @@ class CryptBot:
             self.sound.play_system_start(3)
 
             # DEBUG
-            sys.exit(0)
+            # sys.exit(0)
 
         self.sound.play_system_start(4)
 

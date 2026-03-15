@@ -58,19 +58,9 @@ dur = 500
 i = 1
 while i < 10:
     # 25% resolution square image search
-    pos = imagesearch("monster-gray-title.png")
+    pos = imagesearch("green-attack-button.png")
     if pos[0] != -1:
         #winsound.Beep(freqMerc, dur)
-        print( pos )
-        del pos
-        exit( 0 )
-
-    # 25% resolution square image search
-    pos = imagesearch("tartaros-monster-gray-title.png")
-    if pos[0] != -1:
-        if len(sys.argv) > 1 and sys.argv[1] == '1':
-            winsound.Beep(freqMerc, dur)
-
         print( pos )
         del pos
         exit( 0 )

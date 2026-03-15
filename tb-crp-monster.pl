@@ -57,7 +57,7 @@ use POSIX qw(strftime);
 #########################################################################################
 #
 #
-# Total Battle - Mouse Click Crypter for 1536x864 Chrome browser with bookmark tab offset
+# Total Battle - Mouse Click Rare Monster Attack for 1536x864 Chrome browser with bookmark tab offset
 #
 #use strict;
 no strict;
@@ -389,7 +389,7 @@ sub full_screen_state_machine(;$;$)
 	my $wait_move_xy = $dw +    10000; # 10 ms
 	my $wait_click   = $dw +    60000; # 60 ms
 	my $wait_screen  = $dw +   800000; # 800 ms
-	my $wait_crypt   = $dw + 28000000; # 28000 ms
+	my $wait_monster = $dw + 28000000; # 28000 ms
 
 	my @monster_speedup_mouse_xy = @monster_speedup_second_mouse_xy;
 
@@ -415,7 +415,7 @@ sub full_screen_state_machine(;$;$)
 			my $monster_left_menu_pos_ref = validate_is_monster_left_menu();
 			if (!defined($monster_left_menu_pos_ref))
 			{
-				print "Could not find the crypt LEFT MENU, try again\n";
+				print "Could not find the monster LEFT MENU, try again\n";
 				#exit(1);
 				return 1;
 			}
@@ -451,7 +451,7 @@ sub full_screen_state_machine(;$;$)
 
 		if (!defined($monster_misclick_green_title_pos_ref))
 		{
-			print "Could not find the crypt, nor misclick green title, try again\n";
+			print "Could not find the monster, nor misclick green title, try again\n";
 			return 21;
 		}
 		else
@@ -489,7 +489,7 @@ sub full_screen_state_machine(;$;$)
 
 	usleep($wait_screen);
 
-	moveMouseCursorPosition( $crypt_speedup_top_menu_mouse_xy[0] + $dx, $crypt_speedup_top_menu_mouse_xy[1] + $dy );
+	moveMouseCursorPosition( $monster_speedup_top_menu_mouse_xy[0] + $dx, $monster_speedup_top_menu_mouse_xy[1] + $dy );
 	usleep($wait_move_xy);
 	sendMouseLeftClick(0,0);
 	usleep($wait_click);
@@ -541,7 +541,7 @@ sub full_screen_state_machine(;$;$)
 	usleep($wait_screen);
 
 	playSoundSystemStart(9);
-	usleep($wait_crypt);
+	usleep($wait_monster);
 	playSoundSystemStart(10);
 
 	usleep($wait_screen);
@@ -565,7 +565,7 @@ sub full_screen_state_machine(;$;$)
 
 sub main()
 {
-	# Send many crypt mining sequences
+	# Send many monster attack sequences
 	my $max   = 15000;
 	#9000;
 	#1000;

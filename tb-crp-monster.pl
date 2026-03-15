@@ -174,6 +174,7 @@ my @half_left_crypt_first_mouse_xy            = qw( 710 428 );
 my @half_left_crypt_middle_mouse_xy           = qw( 497 470 );
 my @half_left_crypt_explore_right_mouse_xy    = qw( 643 669 );
 my @half_left_crypt_speedup_top_menu_mouse_xy = qw( 726 186 );
+
 my @half_left_crypt_speedup_first_mouse_xy    = qw( 630 410 );
 my @half_left_crypt_speedup_second_mouse_xy   = qw( 630 502 );
 my @half_left_crypt_speedup_third_mouse_xy    = qw( 630 592 );

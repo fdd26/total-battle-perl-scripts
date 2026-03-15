@@ -171,23 +171,21 @@ my $PYTHON3_PATH_EXE    = q{C:\Progra~1\Python312\python.exe};
 #########################################################################################
 
 my @full_telescope_mouse_xy                   = qw( 564 730 );
-my @full_crypt_menu_mouse_xy                  = qw( 542 435 );
+my @full_monster_menu_mouse_xy                  = qw( 542 435 );
 my @full_monster_menu_mouse_xy                = qw( 542 390 );
 
 # Removed LAVA oil fix
-my @full_crypt_menu_first_mouse_xy            = qw( 975 445 );
-my @full_crypt_menu_second_mouse_xy           = qw( 975 525 );
-my @full_crypt_menu_third_mouse_xy            = qw( 975 605 );
-my @full_crypt_menu_fourth_mouse_xy           = qw( 975 685 );  #qw( 975 705 );
+my @full_monster_menu_first_mouse_xy            = qw( 975 445 );
+my @full_monster_menu_second_mouse_xy           = qw( 975 525 );
+my @full_monster_menu_third_mouse_xy            = qw( 975 605 );
+my @full_monster_menu_fourth_mouse_xy           = qw( 975 685 );  #qw( 975 705 );
 
-my @full_crypt_first_mouse_xy                 = @full_crypt_menu_third_mouse_xy;
+my @full_monster_first_mouse_xy                 = @full_monster_menu_third_mouse_xy;
 
-#my @full_crypt_first_mouse_xy                = qw( 975 445 );
+my @full_monster_middle_mouse_xy                = qw( 773 488 );
+my @full_monster_middle_mouse_lower_xy          = qw( 970 604 );
+my @full_monster_explore_right_mouse_xy         = qw( 916 686 );
 
-my @full_crypt_middle_mouse_xy                = qw( 773 488 );
-my @full_crypt_middle_mouse_lower_xy          = qw( 970 604 );
-
-my @full_crypt_explore_right_mouse_xy         = qw( 916 686 );
 my @full_monster_attack_mouse_xy              = qw( 770 584 );
 my @full_monster_select_all_mouse_xy          = qw( 710 655 );
 my @full_monster_start_march_mouse_xy         = qw( 690 696 );
@@ -195,14 +193,14 @@ my @full_monster_dead_red_x_mouse_xy          = qw( 750 680 );
 my @full_monster_revive_all_mouse_xy          = qw( 818 695 );
 
 
-my @full_crypt_misclick_top_menu_mouse_xy     = qw( 995 348 );
-my @full_crypt_speedup_top_menu_mouse_xy      = qw( 995 200 );
+my @full_monster_misclick_top_menu_mouse_xy     = qw( 995 348 );
+my @full_monster_speedup_top_menu_mouse_xy      = qw( 995 200 );
 
-my @full_crypt_speedup_first_mouse_xy         = qw( 899 430 );
-my @full_crypt_speedup_second_mouse_xy        = qw( 899 517 );
-my @full_crypt_speedup_third_mouse_xy         = qw( 899 606 );
+my @full_monster_speedup_first_mouse_xy         = qw( 899 430 );
+my @full_monster_speedup_second_mouse_xy        = qw( 899 517 );
+my @full_monster_speedup_third_mouse_xy         = qw( 899 606 );
 
-my @full_crypt_speedup_close_mouse_xy         = qw( 984 284 );
+my @full_monster_speedup_close_mouse_xy         = qw( 984 284 );
 
 #########################################################################################
 
@@ -267,7 +265,7 @@ sub validate_is_monster_green_attack_button()
 
 #########################################################################################
 
-sub validate_is_crypt_green_misclick_title()
+sub validate_is_monster_green_misclick_title()
 {
 	my $python3 = $PYTHON3_PATH_EXE;
 	my $script  = q{Is-Crypt-Green-Misclick-Title.py};
@@ -276,7 +274,7 @@ sub validate_is_crypt_green_misclick_title()
 
 	if ($output =~ m/[\#]+BAD/mi)
 	{
-		print "is_crypt_green_misclick_title: BAD was found\n";
+		print "is_monster_green_misclick_title: BAD was found\n";
 		return undef;
 	}
 
@@ -286,7 +284,7 @@ sub validate_is_crypt_green_misclick_title()
 		my $x   = 0 + int($1);
 		my $y   = 0 + int($2);
 		my @pos = ($x, $y);
-		print "is_crypt_green_misclick_title: Found ($x, $y)\n";
+		print "is_monster_green_misclick_title: Found ($x, $y)\n";
 		print Dumper \@pos;
 		return \@pos;
 	}
@@ -296,7 +294,7 @@ sub validate_is_crypt_green_misclick_title()
 
 #########################################################################################
 
-sub validate_is_crypt_green_speedup_title()
+sub validate_is_monster_green_speedup_title()
 {
 	my $python3 = $PYTHON3_PATH_EXE;
 	my $script  = q{Is-Crypt-Green-Speedup-Title.py};
@@ -305,7 +303,7 @@ sub validate_is_crypt_green_speedup_title()
 
 	if ($output =~ m/[\#]+BAD/mi)
 	{
-		print "is_crypt_green_speedup_title: BAD was found\n";
+		print "is_monster_green_speedup_title: BAD was found\n";
 		return undef;
 	}
 
@@ -315,7 +313,7 @@ sub validate_is_crypt_green_speedup_title()
 		my $x   = 0 + int($1);
 		my $y   = 0 + int($2);
 		my @pos = ($x, $y);
-		print "is_crypt_green_speedup_title: Found ($x, $y)\n";
+		print "is_monster_green_speedup_title: Found ($x, $y)\n";
 		print Dumper \@pos;
 		return \@pos;
 	}
@@ -351,36 +349,36 @@ sub full_screen_state_machine(;$;$)
 	{
 		if ($i == 1)
 		{
-			@full_crypt_first_mouse_xy = @full_crypt_menu_second_mouse_xy;
+			@full_monster_first_mouse_xy = @full_monster_menu_second_mouse_xy;
 		}
 		elsif ($i == 2)
 		{
-			@full_crypt_first_mouse_xy = @full_crypt_menu_third_mouse_xy;
+			@full_monster_first_mouse_xy = @full_monster_menu_third_mouse_xy;
 		}
 		elsif ($i == 3)
 		{
-			@full_crypt_first_mouse_xy = @full_crypt_menu_fourth_mouse_xy;
+			@full_monster_first_mouse_xy = @full_monster_menu_fourth_mouse_xy;
 		}
 		else
 		{
-			@full_crypt_first_mouse_xy = @full_crypt_menu_first_mouse_xy;
+			@full_monster_first_mouse_xy = @full_monster_menu_first_mouse_xy;
 		}
 	}
 
 	my @telescope_mouse_xy               = @full_telescope_mouse_xy;
-	my @crypt_menu_mouse_xy              = @full_crypt_menu_mouse_xy;
-	my @crypt_first_mouse_xy             = @full_crypt_first_mouse_xy;
-	my @crypt_middle_mouse_xy            = @full_crypt_middle_mouse_xy;
-	my @crypt_middle_mouse_lower_xy      = @full_crypt_middle_mouse_lower_xy;
-	my @crypt_explore_right_mouse_xy     = @full_crypt_explore_right_mouse_xy;
-	my @crypt_misclick_top_menu_mouse_xy = @full_crypt_misclick_top_menu_mouse_xy;
-	my @crypt_speedup_top_menu_mouse_xy  = @full_crypt_speedup_top_menu_mouse_xy;
+	my @crypt_menu_mouse_xy              = @full_monster_menu_mouse_xy;
+	my @crypt_first_mouse_xy             = @full_monster_first_mouse_xy;
+	my @crypt_middle_mouse_xy            = @full_monster_middle_mouse_xy;
+	my @crypt_middle_mouse_lower_xy      = @full_monster_middle_mouse_lower_xy;
+	my @crypt_explore_right_mouse_xy     = @full_monster_explore_right_mouse_xy;
+	my @crypt_misclick_top_menu_mouse_xy = @full_monster_misclick_top_menu_mouse_xy;
+	my @crypt_speedup_top_menu_mouse_xy  = @full_monster_speedup_top_menu_mouse_xy;
 
-	my @crypt_speedup_first_mouse_xy     = @full_crypt_speedup_first_mouse_xy;
-	my @crypt_speedup_second_mouse_xy    = @full_crypt_speedup_second_mouse_xy;
-	my @crypt_speedup_third_mouse_xy     = @full_crypt_speedup_third_mouse_xy;
+	my @crypt_speedup_first_mouse_xy     = @full_monster_speedup_first_mouse_xy;
+	my @crypt_speedup_second_mouse_xy    = @full_monster_speedup_second_mouse_xy;
+	my @crypt_speedup_third_mouse_xy     = @full_monster_speedup_third_mouse_xy;
 
-	my @crypt_speedup_close_mouse_xy     = @full_crypt_speedup_close_mouse_xy;
+	my @crypt_speedup_close_mouse_xy     = @full_monster_speedup_close_mouse_xy;
 
 	# RANDOM offset of [-x, x]
 	my $dx = int(rand($mouse_delta_x_swing * 2)) - int($mouse_delta_x_swing);
@@ -413,7 +411,7 @@ sub full_screen_state_machine(;$;$)
 
 			usleep($wait_screen);
 
-			my $crypt_left_menu_pos_ref = validate_is_crypt_left_menu();
+			my $crypt_left_menu_pos_ref = validate_is_monster_left_menu();
 			if (!defined($crypt_left_menu_pos_ref))
 			{
 				print "Could not find the crypt LEFT MENU, try again\n";
@@ -441,7 +439,7 @@ sub full_screen_state_machine(;$;$)
 		}
 		else
 		{
-			my $crypt_pos_ref = find_crypt_position();
+			my $crypt_pos_ref = find_monster_position();
 			if (!defined($crypt_pos_ref))
 			{
 				print "Could not find ANY crypt, try again\n";
@@ -463,12 +461,12 @@ sub full_screen_state_machine(;$;$)
 		}
 	}
 
-	my $crypt_gray_title_pos_ref = validate_is_crypt_gray_title();
+	my $crypt_gray_title_pos_ref = validate_is_monster_gray_title();
 	print Dumper $crypt_gray_title_pos_ref;
 
 	if (!defined($crypt_gray_title_pos_ref))
 	{
-		my $crypt_misclick_green_title_pos_ref = validate_is_crypt_green_misclick_title();
+		my $crypt_misclick_green_title_pos_ref = validate_is_monster_green_misclick_title();
 		print Dumper $crypt_misclick_green_title_pos_ref;
 
 		if (!defined($crypt_misclick_green_title_pos_ref))
@@ -489,14 +487,14 @@ sub full_screen_state_machine(;$;$)
 
 			usleep($wait_screen);
 
-			my $crypt_misclick_green_title_pos_ref2 = validate_is_crypt_green_misclick_title();
+			my $crypt_misclick_green_title_pos_ref2 = validate_is_monster_green_misclick_title();
 			if (!defined($crypt_misclick_green_title_pos_ref2))
 			{
 				print "Misclick window was closed\n";
 
 				print "MOVE MOUSE LOWER [". $crypt_middle_mouse_lower_xy[0] .",". $crypt_middle_mouse_lower_xy[1] . "]\n";
 
-				#my @full_crypt_middle_mouse_xy                = qw( 773 488 );
+				#my @full_monster_middle_mouse_xy                = qw( 773 488 );
 				# 970, 604
 				moveMouseCursorPosition( $crypt_middle_mouse_lower_xy[0]  + $dx, $crypt_middle_mouse_lower_xy[1]      + $dy );
 				usleep($wait_move_xy);
@@ -507,7 +505,7 @@ sub full_screen_state_machine(;$;$)
 
 				print "Validate Crypt Gray Title #2\n";
 
-				my $crypt_gray_title_pos_ref2 = validate_is_crypt_gray_title();
+				my $crypt_gray_title_pos_ref2 = validate_is_monster_gray_title();
 				print Dumper $crypt_gray_title_pos_ref2;
 				if (!defined($crypt_gray_title_pos_ref2))
 				{
@@ -554,7 +552,7 @@ sub full_screen_state_machine(;$;$)
 
 	#usleep($wait_screen);
 
-	my $crypt_green_title_pos_ref = validate_is_crypt_green_speedup_title();
+	my $crypt_green_title_pos_ref = validate_is_monster_green_speedup_title();
 
 	if (!defined($crypt_green_title_pos_ref))
 	{

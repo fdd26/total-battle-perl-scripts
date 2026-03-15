@@ -844,7 +844,8 @@ sub full_screen_state_machine(;$;$)
 sub main()
 {
 	# Send many crypt mining sequences
-	my $max   = 9000;
+	my $max   = 15000;
+	#9000;
 	#1000;
 	#10000;
 	my $r2    = 0;

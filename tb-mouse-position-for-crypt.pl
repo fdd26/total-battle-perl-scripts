@@ -158,7 +158,7 @@ my @desktop_crypt_speedup_close_mouse_xy       = qw( 1106 335 );
 sub main()
 {
 	# Record 10 mouse positions delayed by 300 ms
-	my $max = 120;
+	my $max = 3;
 
 	#Win32::Sound::Play("SystemStart");
 

@@ -206,18 +206,18 @@ my @full_crypt_speedup_close_mouse_xy         = qw( 984 284 );
 
 #########################################################################################
 
-sub validate_is_crypt_left_menu()
+sub validate_is_monster_left_menu()
 {
 	my $python3 = $PYTHON3_PATH_EXE;
-	my $script  = q{Is-Crypt-Left-Menu.py};
+	my $script  = q{Is-Monster-Left-Menu.py};
 	my @lines   = qx($python3 $script $PYTHON_WITH_SOUND);
 	my $output  = join('\n', @lines);
 
 	if ($output =~ m/[\#]+BAD/mi)
 	{
-		print "is_crypt_left_menu: BAD was found\n";
+		print "is_monster_left_menu: BAD was found\n";
 
-		print "Crypt Left Menu was not found, the game is stuck\n";
+		print "monster Left Menu was not found, the game is stuck\n";
 		#exit(1);
 		return undef;
 	}
@@ -228,7 +228,7 @@ sub validate_is_crypt_left_menu()
 		my $x   = 0 + int($1);
 		my $y   = 0 + int($2);
 		my @pos = ($x, $y);
-		print "is_crypt_left_menu: Found ($x, $y)\n";
+		print "is_monster_left_menu: Found ($x, $y)\n";
 		print Dumper \@pos;
 		return \@pos;
 	}
@@ -238,16 +238,16 @@ sub validate_is_crypt_left_menu()
 
 #########################################################################################
 
-sub validate_is_crypt_gray_title()
+sub validate_is_monster_green_attack_button()
 {
 	my $python3 = $PYTHON3_PATH_EXE;
-	my $script  = q{Is-Crypt-Gray-Title.py};
+	my $script  = q{Is-Monster-Green-Attack-Button.py};
 	my @lines   = qx($python3 $script $PYTHON_WITH_SOUND);
 	my $output  = join('\n', @lines);
 
 	if ($output =~ m/[\#]+BAD/mi)
 	{
-		print "is_crypt_gray_title: BAD was found\n";
+		print "is_monster_green_attack_button: BAD was found\n";
 		return undef;
 	}
 
@@ -257,7 +257,7 @@ sub validate_is_crypt_gray_title()
 		my $x   = 0 + int($1);
 		my $y   = 0 + int($2);
 		my @pos = ($x, $y);
-		print "is_crypt_gray_title: Found ($x, $y)\n";
+		print "is_monster_green_attack_button: Found ($x, $y)\n";
 		print Dumper \@pos;
 		return \@pos;
 	}
@@ -316,35 +316,6 @@ sub validate_is_crypt_green_speedup_title()
 		my $y   = 0 + int($2);
 		my @pos = ($x, $y);
 		print "is_crypt_green_speedup_title: Found ($x, $y)\n";
-		print Dumper \@pos;
-		return \@pos;
-	}
-
-	return undef;
-}
-
-#########################################################################################
-
-sub find_crypt_position()
-{
-	my $python3 = $PYTHON3_PATH_EXE;
-	my $script  = q{crypt-search.py};
-	my @lines   = qx($python3 $script $PYTHON_WITH_SOUND);
-	my $output  = join('\n', @lines);
-
-	if ($output =~ m/[\#]+BAD/mi)
-	{
-		print "find_crypt_position: BAD was found\n";
-		return undef;
-	}
-
-	print Dumper \@lines;
-	if ($output =~ m/[\(]+([1-9][0-9]*)[, ]+([1-9][0-9]*)[\)]+/mi)
-	{
-		my $x   = 0 + int($1);
-		my $y   = 0 + int($2);
-		my @pos = ($x, $y);
-		print "find_crypt_position: Found ($x, $y)\n";
 		print Dumper \@pos;
 		return \@pos;
 	}

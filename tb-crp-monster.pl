@@ -167,21 +167,6 @@ my $mouse_delta_y_swing = 0;
 my $PYTHON3_PATH_EXE    = q{C:\Progra~1\Python312\python.exe};
 
 #########################################################################################
-
-my @half_left_telescope_mouse_xy              = qw( 286 722 );
-my @half_left_crypt_menu_mouse_xy             = qw( 276 419 );
-my @half_left_crypt_first_mouse_xy            = qw( 710 428 );
-my @half_left_crypt_middle_mouse_xy           = qw( 497 470 );
-my @half_left_crypt_explore_right_mouse_xy    = qw( 643 669 );
-my @half_left_crypt_speedup_top_menu_mouse_xy = qw( 726 186 );
-
-my @half_left_crypt_speedup_first_mouse_xy    = qw( 630 410 );
-my @half_left_crypt_speedup_second_mouse_xy   = qw( 630 502 );
-my @half_left_crypt_speedup_third_mouse_xy    = qw( 630 592 );
-
-my @half_left_crypt_speedup_close_mouse_xy    = qw( 714 271 );
-
-#########################################################################################
 # FULL SCREEN 100% CHROME / 25% GAME ZOOM + Chrome Bookmark bar
 #########################################################################################
 
@@ -189,11 +174,11 @@ my @full_telescope_mouse_xy                   = qw( 564 730 );
 my @full_crypt_menu_mouse_xy                  = qw( 542 435 );
 my @full_monster_menu_mouse_xy                = qw( 542 390 );
 
-# LAVA oil fix
-my @full_crypt_menu_first_mouse_xy            = qw( 975 464 );#qw( 975 445 );
-my @full_crypt_menu_second_mouse_xy           = qw( 975 544 );#qw( 975 525 );
-my @full_crypt_menu_third_mouse_xy            = qw( 975 624 );#qw( 975 605 );
-my @full_crypt_menu_fourth_mouse_xy           = qw( 975 699 );#qw( 975 685 );qw( 975 705 );
+# Removed LAVA oil fix
+my @full_crypt_menu_first_mouse_xy            = qw( 975 445 );
+my @full_crypt_menu_second_mouse_xy           = qw( 975 525 );
+my @full_crypt_menu_third_mouse_xy            = qw( 975 605 );
+my @full_crypt_menu_fourth_mouse_xy           = qw( 975 685 );  #qw( 975 705 );
 
 my @full_crypt_first_mouse_xy                 = @full_crypt_menu_third_mouse_xy;
 

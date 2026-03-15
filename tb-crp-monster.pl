@@ -91,9 +91,9 @@ Win32::API->Import('user32' => 'BOOL GetCursorPos(LPPOINT pt)');
 Win32::API->Import('user32' => 'BOOL SetCursorPos(int x, int y)');
 Win32::API->Import('user32' => 'void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo)');
 
-my $NO_SOUND          = 1;
-my $PERL_WITH_SOUND   = 0;
-my $PYTHON_WITH_SOUND = 0;
+my $NO_SOUND          = 0;
+my $PERL_WITH_SOUND   = 1;
+my $PYTHON_WITH_SOUND = 1;
 
 if ($NO_SOUND)
 {
@@ -175,12 +175,14 @@ my @full_telescope_mouse_xy                     = qw( 564 730 );
 my @full_monster_menu_mouse_xy                  = qw( 542 390 );
 
 # Removed LAVA oil fix
-my @full_monster_menu_first_mouse_xy            = qw( 975 445 );
-my @full_monster_menu_second_mouse_xy           = qw( 975 525 );
-my @full_monster_menu_third_mouse_xy            = qw( 975 605 );
-my @full_monster_menu_fourth_mouse_xy           = qw( 975 685 );  #qw( 975 705 );
+my @full_monster_menu_first_mouse_xy            = qw( 975 500 );
+my @full_monster_menu_second_mouse_xy           = qw( 975 582 );
+my @full_monster_menu_third_mouse_xy            = qw( 975 658 );
 
 my @full_monster_first_mouse_xy                 = @full_monster_menu_third_mouse_xy;
+
+my @full_monster_middle_mouse_xy                = qw( 773 488 );
+my @full_monster_middle_mouse_lower_xy          = qw( 970 604 );
 
 my @full_monster_attack_mouse_xy                = qw( 770 584 );
 my @full_monster_select_all_mouse_xy            = qw( 710 655 );
@@ -351,10 +353,6 @@ sub full_screen_state_machine(;$;$)
 		{
 			@full_monster_first_mouse_xy = @full_monster_menu_third_mouse_xy;
 		}
-		elsif ($i == 3)
-		{
-			@full_monster_first_mouse_xy = @full_monster_menu_fourth_mouse_xy;
-		}
 		else
 		{
 			@full_monster_first_mouse_xy = @full_monster_menu_first_mouse_xy;
@@ -364,6 +362,10 @@ sub full_screen_state_machine(;$;$)
 	my @telescope_mouse_xy                 = @full_telescope_mouse_xy;
 	my @monster_menu_mouse_xy              = @full_monster_menu_mouse_xy;
 	my @monster_first_mouse_xy             = @full_monster_first_mouse_xy;
+
+	my @monster_middle_mouse_xy            = @full_monster_middle_mouse_xy;
+	my @monster_middle_mouse_lower_xy      = @full_monster_middle_mouse_lower_xy;
+
 	my @monster_misclick_top_menu_mouse_xy = @full_monster_misclick_top_menu_mouse_xy;
 	my @monster_speedup_top_menu_mouse_xy  = @full_monster_speedup_top_menu_mouse_xy;
 
@@ -394,51 +396,45 @@ sub full_screen_state_machine(;$;$)
 	my @monster_speedup_mouse_xy = @monster_speedup_second_mouse_xy;
 
 	# TELESCOPE
-	if (1)
+	moveMouseCursorPosition( $telescope_mouse_xy[0]              + $dx, $telescope_mouse_xy[1]           + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	moveMouseCursorPosition( $monster_menu_mouse_xy[0]             + $dx, $monster_menu_mouse_xy[1]          + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	my $monster_left_menu_pos_ref = validate_is_monster_left_menu();
+	if (!defined($monster_left_menu_pos_ref))
 	{
-		if(1) # if($skip < 1)
-		{
-			moveMouseCursorPosition( $telescope_mouse_xy[0]              + $dx, $telescope_mouse_xy[1]           + $dy );
-			usleep($wait_move_xy);
-			sendMouseLeftClick(0,0);
-			usleep($wait_click);
-
-			usleep($wait_screen);
-
-			moveMouseCursorPosition( $monster_menu_mouse_xy[0]             + $dx, $monster_menu_mouse_xy[1]          + $dy );
-			usleep($wait_move_xy);
-			sendMouseLeftClick(0,0);
-			usleep($wait_click);
-
-			usleep($wait_screen);
-
-			my $monster_left_menu_pos_ref = validate_is_monster_left_menu();
-			if (!defined($monster_left_menu_pos_ref))
-			{
-				print "Could not find the monster LEFT MENU, try again\n";
-				#exit(1);
-				return 1;
-			}
-
-			usleep($wait_screen); # 500 ms
-
-			moveMouseCursorPosition( $monster_first_mouse_xy[0]          + $dx, $monster_first_mouse_xy[1]         + $dy );
-			usleep($wait_move_xy);
-			sendMouseLeftClick(0,0);
-			usleep($wait_click);
-
-			usleep($wait_screen);
-
-			usleep($wait_screen);
-
-			moveMouseCursorPosition( $monster_middle_mouse_xy[0]           + $dx, $monster_middle_mouse_xy[1]        + $dy );
-			usleep($wait_move_xy);
-			sendMouseLeftClick(0,0);
-			usleep($wait_click);
-
-			usleep($wait_screen);
-		}
+		print "Could not find the monster LEFT MENU, try again\n";
+		#exit(1);
+		return 1;
 	}
+
+	usleep($wait_screen); # 500 ms
+
+	moveMouseCursorPosition( $monster_first_mouse_xy[0]          + $dx, $monster_first_mouse_xy[1]         + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
+
+	usleep($wait_screen);
+
+	moveMouseCursorPosition( $monster_middle_mouse_xy[0]           + $dx, $monster_middle_mouse_xy[1]        + $dy );
+	usleep($wait_move_xy);
+	sendMouseLeftClick(0,0);
+	usleep($wait_click);
+
+	usleep($wait_screen);
 
 	# ATTACK SCREEN
 	my $monster_green_attack_pos_ref = validate_is_monster_green_attack_button();
@@ -566,7 +562,7 @@ sub full_screen_state_machine(;$;$)
 sub main()
 {
 	# Send many monster attack sequences
-	my $max   = 15000;
+	my $max   = 1;
 	#9000;
 	#1000;
 	#10000;
@@ -602,7 +598,7 @@ sub main()
 			print "Skip wait...\n";
 		}
 
-		$r2 = full_screen_state_machine($i % 4);
+		$r2 = full_screen_state_machine($i % 3);
 
 		if ($r2 == 1)
 		{
